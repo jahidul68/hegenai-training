@@ -96,6 +96,50 @@
         return { lines: lines, missing: missing };
     }
 
+    // A module may give its live prompt as a template instead of using Module 1's
+    // prompt: { kind: "live-prompt", template: [ "Assignment: {{name|[assignment name]}}", ... ] }.
+    // {{key|[placeholder]}} is replaced by the form value saved under key, or by the
+    // placeholder while it is empty. A value typed on several lines (such as a list of
+    // criteria) becomes several prompt lines. Returns { lines, missing }.
+    function buildFromTemplate(values, template) {
+        var missing = false;
+        var lines = [];
+        template.forEach(function (source) {
+            var parts = [];
+            var pattern = /\{\{\s*([\w-]+)\s*(?:\|([^}]*))?\}\}/g;
+            var last = 0;
+            var match;
+            while ((match = pattern.exec(source)) !== null) {
+                if (match.index > last) parts.push({ text: source.slice(last, match.index), filled: false });
+                var raw = (values[match[1]] || '').split('\n').map(function (line) {
+                    return line.replace(/\s+/g, ' ').trim();
+                }).filter(Boolean).join('\n');
+                if (raw) {
+                    parts.push({ text: raw, filled: true });
+                } else {
+                    missing = true;
+                    parts.push({ text: match[2] || '[' + match[1] + ']', filled: false });
+                }
+                last = pattern.lastIndex;
+            }
+            if (last < source.length) parts.push({ text: source.slice(last), filled: false });
+
+            // Split parts on line breaks into separate prompt lines.
+            var line = [];
+            parts.forEach(function (part) {
+                part.text.split('\n').forEach(function (piece, index) {
+                    if (index > 0) {
+                        lines.push(line);
+                        line = [];
+                    }
+                    if (piece) line.push({ text: piece, filled: part.filled });
+                });
+            });
+            lines.push(line);
+        });
+        return { lines: lines, missing: missing };
+    }
+
     function plainText(lines) {
         return lines.map(function (line) {
             return line.map(function (part) {
@@ -128,7 +172,7 @@
         });
     }
 
-    function renderPrompt(slot, moduleId, scope) {
+    function renderPrompt(slot, moduleId, scope, spec) {
         var forms = window.HEGenAIForm;
         if (!forms) return;
 
@@ -161,8 +205,13 @@
 
         var current = '';
         function update() {
-            var found = forms.readLevels(scope, LEVELS_FROM);
-            var built = buildLines(forms.get(moduleId), found ? found.levels : []);
+            var built;
+            if (spec && spec.template) {
+                built = buildFromTemplate(forms.get(moduleId), spec.template);
+            } else {
+                var found = forms.readLevels(scope, LEVELS_FROM);
+                built = buildLines(forms.get(moduleId), found ? found.levels : []);
+            }
             current = plainText(built.lines);
             notice.hidden = !built.missing;
             body.textContent = '';

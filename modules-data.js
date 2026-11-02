@@ -522,12 +522,395 @@ window.HEGENAI_MODULES = {
         {
             id: "feedback-with-genai",
             number: 3,
-            title: "Give Formative Feedback with GenAI",
+            title: "GenAI Teaching Assistant for Formative Feedback",
             cluster: null,
-            outcome: "To be confirmed",
-            minutes: 60,
-            extraMinutes: 20,
-            status: "soon"
+            outcome: "After this module, you can turn the assessment criteria of a written assignment into a GenAI feedback prompt, and you leave with a tested prompt your students can use to check their drafts against your criteria before they hand in.",
+            outcomePreview: { resource: "finished-prompt", caption: "An example of the feedback prompt you leave with. Select to open it." },
+            audience: "Higher education educators who set written assignments with stated criteria. No prior GenAI experience needed.",
+            needs: "A GenAI tool your institution approves, for example Microsoft Copilot with your university login. Also, the criteria of an assignment you set, or the practice case provided in the module.",
+            minutes: 55,
+            extraMinutes: 10,
+            extraLabel: "practice log",
+            status: "available",
+            blocks: [
+                {
+                    id: "intro",
+                    minutes: 10,
+                    html: '<p><dfn>Formative feedback</dfn> is feedback students get while they can still improve their work, for example on a draft before the deadline.</p>' +
+                        '<h3>The problem</h3>' +
+                        '<p>Students often learn how their work measures up to the criteria only at grading, when it is too late to act on it. Before the deadline, teachers and teaching assistants answer the same “does my draft meet the criteria?” questions again and again, which does not scale to large classes.</p>' +
+                        '<p>Many students already ask a GenAI chatbot for feedback, with their own prompts. They get fluent but generic feedback, not tied to your criteria and often too kind to weak work.</p>' +
+                        '<h3>What you make</h3>' +
+                        '<p>A <dfn>feedback prompt</dfn>: a short text you put on your course page. Students paste it into a GenAI tool together with their draft, and get feedback on each of your criteria, with a quote from their own text and one next step. No grade, and no rewritten text. You do not need to build an agent or a custom chatbot.</p>',
+                    quiz: {
+                        title: "Where you stand",
+                        intro: "This question helps you choose your route through the module.",
+                        scored: false,
+                        questions: [
+                            {
+                                id: "m3-route",
+                                prompt: "Which assignment will you work on?",
+                                options: [
+                                    {
+                                        text: "My own, and it has written criteria or a rubric.",
+                                        note: "Use it throughout the module. In **Try it**, you sharpen 3 to 5 of its criteria."
+                                    },
+                                    {
+                                        text: "My own, but its criteria are not written down yet.",
+                                        note: "Use it throughout the module. In **Try it**, write 3 to 5 criteria as you would explain them to a student."
+                                    },
+                                    {
+                                        text: "I have none coming up.",
+                                        note: "Use the practice case throughout the module. It comes with a weak and a strong sample to test on.",
+                                        action: { label: "Open the practice case", resource: "practice-case" }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: "see",
+                    minutes: 15,
+                    html: '<p>In this block, you see a feedback prompt made for the sample case, and what it gives a student with a weak draft.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="sample-case">Open the sample case</button></p>' +
+                        '<p>The feedback prompt has three parts:</p>' +
+                        '<ol>' +
+                        '<li><strong>Criteria with “met when”.</strong> Each criterion says what a draft must show to meet it. Without this, the tool falls back on its own idea of good work.</li>' +
+                        '<li><strong>Fixed feedback rules.</strong> For each criterion: a verdict, a quote from the student’s text as evidence, and one next step. Never a grade, and never rewritten text.</li>' +
+                        '<li><strong>A note to the student.</strong> The feedback can be wrong, and the teacher grades.</li>' +
+                        '</ol>' +
+                        '<p class="section-divider">Now, the four steps, for the sample case.</p>' +
+                        '<ol class="step-list" role="list">' +
+                        '<li>' +
+                        '<p><strong>Make each criterion checkable.</strong> A criterion is checkable when the tool can find evidence for it in the student’s text alone. For example:</p>' +
+                        '<ul class="check-list" role="list">' +
+                        '<li><span class="check-label check-label-fixed">Fixed</span> <span><strong>Before:</strong> “The recommendation is well argued.” <strong>After:</strong> “Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.”</span></li>' +
+                        '</ul>' +
+                        '</li>' +
+                        '<li>' +
+                        '<p><strong>Fill in the prompt.</strong> Below is the complete prompt for the sample case. The underlined parts are what you change for your own assignment.</p>' +
+                        '<div data-text="see-prompt"></div>' +
+                        '</li>' +
+                        '<li>' +
+                        '<p><strong>Run it on a weak draft.</strong> A student pastes the prompt and the recommendation section of their draft into a GenAI tool. Below is the kind of feedback they get.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="sample-weak">Open the weak draft section</button></p>' +
+                        '<div data-text="see-draft"></div>' +
+                        '</li>' +
+                        '<li>' +
+                        '<p><strong>Check the feedback.</strong> Before students get the prompt, you check what it gives against your own judgement:</p>' +
+                        '<ul class="check-list" role="list">' +
+                        '<li><span class="check-label check-label-ok">OK</span> <span><strong>Each verdict quotes the draft.</strong> The student can see what the verdict is based on.</span></li>' +
+                        '<li><span class="check-label check-label-ok">OK</span> <span><strong>A missing part is named, not guessed.</strong> Only the recommendation was pasted, so the analysis cannot be judged, and the feedback says so.</span></li>' +
+                        '<li><span class="check-label check-label-ok">OK</span> <span><strong>The verdict is not too kind.</strong> The claims have no source, so the anchored criterion gives “Not yet met”. With the vague criterion, nothing in the prompt says what is missing.</span></li>' +
+                        '<li><span class="check-label check-label-ok">OK</span> <span><strong>No grade and no rewritten text.</strong> Each next step tells the student what to do, not what to write.</span></li>' +
+                        '</ul>' +
+                        '</li>' +
+                        '</ol>' +
+                        '<h3>Why it works</h3>' +
+                        '<p>Feedback helps most when it makes clear what good work looks like and reaches students while they can still act on it (Nicol &amp; Macfarlane-Dick, 2006), and when it says where to go next, not only how well the work did (Hattie &amp; Timperley, 2007). The “met when” parts carry your standard into the prompt, and testing on a weak and a strong sample shows whether the tool keeps it.</p>',
+                    quiz: {
+                        title: "Self-check",
+                        scored: true,
+                        questions: [
+                            {
+                                id: "m3-see1",
+                                prompt: "A student pastes a weak section, and the feedback says every criterion is met. What is the most likely cause?",
+                                options: [
+                                    { text: "The student has found a way to trick the tool." },
+                                    { text: "The criteria have no “met when”, so the tool falls back on its own, often lenient, judgement." },
+                                    { text: "The GenAI tool is broken." }
+                                ],
+                                correct: 1,
+                                explanation: "Without a “met when”, the tool has nothing specific to check, and fluent text tends to pass. See step 1 in **See it**."
+                            },
+                            {
+                                id: "m3-see2",
+                                prompt: "Which rule belongs in the feedback prompt?",
+                                options: [
+                                    { text: "Give a provisional grade, so the student knows where they stand." },
+                                    { text: "Rewrite the weakest paragraph as an example." },
+                                    { text: "For each criterion, quote the student’s own text and give one next step." }
+                                ],
+                                correct: 2,
+                                explanation: "The feedback is formative: the teacher grades, and the student writes the text."
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: "try",
+                    minutes: 10,
+                    html: '<p>In this block, you collect what the prompt needs, for an assignment you set or for the practice case.</p>' +
+                        '<div class="callout">' +
+                        '<h3 class="callout-title">What to aim for</h3>' +
+                        '<ul>' +
+                        '<li>3 to 5 criteria, one per line, each with “Met when:”.</li>' +
+                        '<li>Each criterion can be judged from the student’s text alone.</li>' +
+                        '<li>The criteria are the ones students see, in words they understand.</li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '<div data-form></div>',
+                    quiz: {
+                        title: "Self-check",
+                        scored: true,
+                        questions: [
+                            {
+                                id: "m3-try1",
+                                prompt: "Which criterion can a GenAI tool judge from the student’s text alone?",
+                                action: { label: "Open the practice case", resource: "practice-case" },
+                                options: [
+                                    {
+                                        text: "Good data. Met when: the student took the measurements carefully.",
+                                        note: "How carefully the student measured cannot be seen in the text."
+                                    },
+                                    {
+                                        text: "Data with uncertainties. Met when: every measured value has a unit and an uncertainty.",
+                                        note: "This can be checked in the text: each value either has a unit and an uncertainty, or not."
+                                    },
+                                    {
+                                        text: "Effort. Met when: the student has worked hard on the report.",
+                                        note: "Effort cannot be seen in the text, and it is not what the report is assessed on."
+                                    }
+                                ],
+                                correct: 1
+                            }
+                        ]
+                    },
+                    form: {
+                        practiceResource: "practice-case",
+                        practiceFill: true,
+                        fields: [
+                            {
+                                title: "The assignment",
+                                guidance: "Its name, and a short description students would recognise.",
+                                inputs: [
+                                    { key: "name", label: "Name", type: "line",
+                                      practice: "Pendulum lab report" },
+                                    { key: "description", label: "Description", type: "text", rows: 3,
+                                      practice: "A 1,500-word individual lab report in a first-year bachelor's physics course. Students measure the acceleration due to gravity with a simple pendulum, analyse their data, and discuss the result." }
+                                ]
+                            },
+                            {
+                                title: "Criteria",
+                                guidance: "3 to 5 criteria, one per line. Write each as: name. Met when: what the draft must show.",
+                                inputs: [
+                                    { key: "criteria", label: "Criteria", type: "text", rows: 6,
+                                      practice: "1. Data with uncertainties. Met when: every measured value has a unit and an uncertainty, and the table or graph shows them.\n2. Comparison with the accepted value. Met when: the result for g is compared with the accepted value (about 9.82 m/s²), and the difference is judged against the uncertainty.\n3. Sources of error. Met when: at least two specific sources of error are named, each with its likely effect on g and one improvement." }
+                                ]
+                            },
+                            {
+                                title: "Students and language",
+                                guidance: "Who the students are, and the language the feedback should be in.",
+                                inputs: [
+                                    { key: "students", label: "Students", type: "line",
+                                      practice: "first-year bachelor's students" },
+                                    { key: "language", label: "Language", type: "line",
+                                      practice: "English" }
+                                ]
+                            },
+                            {
+                                title: "What students paste",
+                                guidance: "Which part of the draft, and how long. Shorter parts give more precise feedback.",
+                                inputs: [
+                                    { key: "paste", label: "What students paste", type: "line",
+                                      practice: "the Results and Discussion sections of their draft" }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: "make",
+                    minutes: 15,
+                    html: '<p>In this block, you test your feedback prompt on a weak and a strong sample, fix it, and make it ready for students.</p>' +
+                        '<ol class="step-list" role="list">' +
+                        '<li>' +
+                        '<p><strong>Copy your prompt.</strong> It is the prompt from <a href="#block-see">See it</a>, with your information from <a href="#block-try">Try it</a>.</p>' +
+                        '<div data-text="make-prompt"></div>' +
+                        '</li>' +
+                        '<li><p><strong>Test it on a weak sample.</strong> Open a new conversation in your GenAI tool, paste the prompt, and paste a weak sample under it. Do it twice, in two new conversations. Use samples you wrote yourself or the practice samples, never real student work with names or other personal data.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="practice-weak">Open the weak practice sample</button></p></li>' +
+                        '<li><p><strong>Test it on a strong sample</strong> in the same way, once.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="practice-strong">Open the strong practice sample</button></p></li>' +
+                        '<li><p><strong>Check the feedback.</strong> First judge the samples yourself, criterion by criterion. Then tick what holds:</p>' +
+                        '<ol class="tick-list" data-checklist>' +
+                        '<li>Every verdict comes with a quote from the sample.</li>' +
+                        '<li>The weak sample gets lower verdicts than the strong one, on the criteria where it is weaker.</li>' +
+                        '<li>The two runs on the weak sample give the same verdicts.</li>' +
+                        '<li>There is no grade or score, and no rewritten text.</li>' +
+                        '<li>Each next step is something the student can do, in the terms of your criteria.</li>' +
+                        '</ol>' +
+                        '<p>Where a tick is missing, sharpen the “Met when” of that criterion in <a href="#block-try">Try it</a>, copy the prompt again and rerun. Note what you changed: you need it for the practice log.</p>' +
+                        '</li>' +
+                        '<li><p><strong>Save it.</strong> Paste the final prompt into a document, with one line on top for students: “Paste this into [the approved GenAI tool], then paste your draft under it.”</p>' +
+                        '<details class="dropdown">' +
+                        '<summary>Optional: if your tool can hold standing instructions</summary>' +
+                        '<div class="dropdown-body">' +
+                        '<p>Some tools let you save instructions once and share a link, for example a Microsoft Copilot agent, a custom GPT, a Gemini Gem, or your institution’s own GenAI platform. If yours does, and your institution allows sharing it with students, paste the same prompt as the instructions. Students then only paste their draft. Test it again in the same way.</p>' +
+                        '</div>' +
+                        '</details>' +
+                        '</li>' +
+                        '</ol>'
+                },
+                {
+                    id: "plan",
+                    minutes: 5,
+                    html: '<p>In this block, you plan how students get your feedback prompt, and start the practice log.</p>' +
+                        '<ol class="step-list" role="list">' +
+                        '<li><p><strong>Check the tool and the rules.</strong> Students should use a GenAI tool your institution approves for their work, and the course’s GenAI rules must allow GenAI feedback on drafts. If they do not, change the rules or the plan before you hand out the prompt.</p></li>' +
+                        '<li><p><strong>Choose when.</strong> Give students the prompt when they have a draft to check, for example two weeks before the deadline, with time to act on the feedback.</p></li>' +
+                        '<li><p><strong>Introduce it.</strong> In class or on the course page, tell students what it is for, that the feedback can be wrong, that you grade, and not to paste in other people’s work or personal data.</p></li>' +
+                        '<li><p><strong>Start the practice log.</strong> Note the course, the assignment, when students get the prompt, and how you will find out whether they used it (for example, one question in the hand-in). After the hand-in, answer: Was one piece of feedback a student got right by your criteria? What did you change in the prompt, and why? What would you tell a colleague?</p></li>' +
+                        '</ol>'
+                }
+            ],
+            resources: [
+                {
+                    id: "sample-case",
+                    group: "Worked example",
+                    title: "Sample case",
+                    html: '<p class="resource-note">(Invented for this module, used in shown examples.)</p>' +
+                        '<p><strong>Case study report.</strong> A 2,500-word individual report in a second-year bachelor’s course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.</p>' +
+                        '<p><strong>Criteria:</strong></p>' +
+                        '<ol>' +
+                        '<li>Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.</li>' +
+                        '<li>Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.</li>' +
+                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.</li>' +
+                        '</ol>'
+                },
+                {
+                    id: "sample-weak",
+                    group: "Worked example",
+                    title: "Weak draft section",
+                    html: '<p class="resource-note">(Invented for this module: the recommendation section of a weak draft for the sample case.)</p>' +
+                        '<div class="guide-page">' +
+                        '<h4>Recommendation</h4>' +
+                        '<p>Based on the analysis, Café Nord should introduce a loyalty app. Loyalty apps are very popular and many companies use them successfully. This would solve the problem of customers not coming back and increase sales. It is also cheap to set up. In conclusion, the loyalty app is the best solution for Café Nord.</p>' +
+                        '</div>'
+                },
+                {
+                    id: "finished-prompt",
+                    group: "Worked example",
+                    title: "Finished sample prompt",
+                    html: '<p class="resource-note">(Based on the sample case, as students get it on the course page.)</p>' +
+                        '<div class="guide-page">' +
+                        '<h3>Feedback on your draft: case study report</h3>' +
+                        '<p><em>Paste the text below into <mark class="fill-in">[the approved GenAI tool]</mark>, then paste your draft section under it.</em></p>' +
+                        '<p>You give formative feedback to a student on a draft of one written assignment. You do not grade it.</p>' +
+                        '<p>Assignment: Case study report. A 2,500-word individual report in a second-year bachelor’s course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.</p>' +
+                        '<p>Students: second-year bachelor’s students. Write your feedback in English.</p>' +
+                        '<p>Criteria (judge only these):</p>' +
+                        '<ol>' +
+                        '<li>Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.</li>' +
+                        '<li>Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.</li>' +
+                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.</li>' +
+                        '</ol>' +
+                        '<p>For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write “Cannot judge” and say what is missing.</p>' +
+                        '<p>Never give a grade, a score or an overall judgement. Never rewrite the student’s text or write new text for them, even if asked. Do not add criteria of your own.</p>' +
+                        '<p>Answer with one short section per criterion. End with: “This is GenAI feedback on your draft against the course criteria. It can be wrong. Your teacher grades your work.”</p>' +
+                        '<p>The student pastes one or more sections of their draft below. If nothing is pasted, ask for it.</p>' +
+                        '</div>'
+                },
+                {
+                    id: "practice-case",
+                    group: "Optional materials",
+                    title: "Practice case",
+                    html: '<p class="resource-note">(Invented for this module, for you to use if you do not have your own case to work on.)</p>' +
+                        '<p><strong>Pendulum lab report.</strong> A 1,500-word individual lab report in a first-year bachelor’s physics course. Students measure the acceleration due to gravity with a simple pendulum, analyse their data, and discuss the result.</p>' +
+                        '<p><strong>Criteria:</strong></p>' +
+                        '<ol>' +
+                        '<li>Data with uncertainties. Met when: every measured value has a unit and an uncertainty, and the table or graph shows them.</li>' +
+                        '<li>Comparison with the accepted value. Met when: the result for g is compared with the accepted value (about 9.82 m/s²), and the difference is judged against the uncertainty.</li>' +
+                        '<li>Sources of error. Met when: at least two specific sources of error are named, each with its likely effect on g and one improvement.</li>' +
+                        '</ol>' +
+                        '<p>Test samples: <button type="button" class="link-button" data-open-resource="practice-weak">weak</button> and <button type="button" class="link-button" data-open-resource="practice-strong">strong</button>.</p>'
+                },
+                {
+                    id: "practice-weak",
+                    group: "Optional materials",
+                    title: "Weak practice sample",
+                    html: '<p class="resource-note">(Invented for this module: Results and Discussion of a weak draft for the practice case. Copy it under your prompt.)</p>' +
+                        '<div class="guide-page">' +
+                        '<h4>Results and Discussion</h4>' +
+                        '<p>We measured the time for 10 swings five times with a length of 0.80 m. The average period was 1.83 s. Using T = 2π√(L/g) we got g = 9.43. This is close to the real value, so the experiment worked well.</p>' +
+                        '<p>There could be some errors because of human reaction time and the string maybe stretching. In the future the experiment could be done more carefully.</p>' +
+                        '</div>'
+                },
+                {
+                    id: "practice-strong",
+                    group: "Optional materials",
+                    title: "Strong practice sample",
+                    html: '<p class="resource-note">(Invented for this module: Results and Discussion of a strong draft for the practice case. Copy it under your prompt.)</p>' +
+                        '<div class="guide-page">' +
+                        '<h4>Results and Discussion</h4>' +
+                        '<p>We timed 10 swings five times at L = 0.800 ± 0.002 m. The mean period was T = 1.796 ± 0.008 s (standard error of the five timings, divided by 10). From T = 2π√(L/g), g = 9.79 ± 0.09 m/s².</p>' +
+                        '<p>The accepted value is about 9.82 m/s², so our result is 0.03 m/s² lower, well within one uncertainty.</p>' +
+                        '<p>The largest source of error is reaction time when starting and stopping the stopwatch, about 0.2 s per timing. Timing 10 swings reduces its effect on T tenfold; timing 20 swings, or using a light gate, would reduce it further. A second source is the amplitude: we released the pendulum at about 15°, where the real period is about 0.4% longer than the small-angle formula assumes, which makes our g slightly too low. Releasing it at under 10° would reduce this.</p>' +
+                        '</div>'
+                }
+            ],
+            texts: [
+                {
+                    id: "make-prompt",
+                    kind: "live-prompt",
+                    template: [
+                        "You give formative feedback to a student on a draft of one written assignment. You do not grade it.",
+                        "Assignment: {{name|[assignment name]}}. {{description|[description]}}",
+                        "Students: {{students|[students]}}. Write your feedback in {{language|[language]}}.",
+                        "Criteria (judge only these):",
+                        "{{criteria|[criteria, one per line, each with Met when]}}",
+                        "For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write \"Cannot judge\" and say what is missing.",
+                        "Never give a grade, a score or an overall judgement. Never rewrite the student's text or write new text for them, even if asked. Do not add criteria of your own.",
+                        "Answer with one short section per criterion. End with: \"This is GenAI feedback on your draft against the course criteria. It can be wrong. Your teacher grades your work.\"",
+                        "The student pastes {{paste|[what students paste]}} below. If nothing is pasted, ask for it."
+                    ]
+                },
+                {
+                    id: "see-prompt",
+                    kind: "prompt",
+                    label: "Prompt",
+                    showLines: 6,
+                    moreLabel: "Show the whole prompt",
+                    lines: [
+                        "You give formative feedback to a student on a draft of one written assignment. You do not grade it.",
+                        "Assignment: {{Case study report. A 2,500-word individual report in a second-year bachelor's course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.}}",
+                        "Students: {{second-year bachelor's students}}. Write your feedback in {{English}}.",
+                        "Criteria (judge only these):",
+                        "{{1. Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.}}",
+                        "{{2. Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.}}",
+                        "{{3. Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.}}",
+                        "For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write \"Cannot judge\" and say what is missing.",
+                        "Never give a grade, a score or an overall judgement. Never rewrite the student's text or write new text for them, even if asked. Do not add criteria of your own.",
+                        "Answer with one short section per criterion. End with: \"This is GenAI feedback on your draft against the course criteria. It can be wrong. Your teacher grades your work.\"",
+                        "The student pastes {{one or more sections of their draft}} below. If nothing is pasted, ask for it."
+                    ]
+                },
+                {
+                    id: "see-draft",
+                    kind: "draft",
+                    label: "Example feedback on the weak draft section (illustration; replace with a real run)",
+                    showLines: 5,
+                    moreLabel: "Show all the feedback",
+                    lines: [
+                        "# 1. Problem analysis",
+                        "Cannot judge: only the recommendation section was pasted. Paste the analysis section to get feedback on this criterion.",
+                        "# 2. Justified recommendation",
+                        "- Verdict: Not yet met.",
+                        "- Evidence: \"Loyalty apps are very popular and many companies use them successfully.\"",
+                        "- Next step: Back each claim with a cited source or with data about Café Nord, for example how many customers return today, and show how the app answers the problem found in your analysis.",
+                        "# 3. Clear for a professional reader",
+                        "- Verdict: Partly met.",
+                        "- Evidence: \"Based on the analysis, Café Nord should introduce a loyalty app.\"",
+                        "- Next step: Open the section by stating its purpose, and check that your conclusion answers the question you set in the introduction.",
+                        "This is GenAI feedback on your draft against the course criteria. It can be wrong. Your teacher grades your work."
+                    ]
+                }
+            ],
+            sources: '<ul class="reference-list">' +
+                '<li>Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <i>Review of Educational Research, 77</i>(1), 81–112. <a href="https://doi.org/10.3102/003465430298487">https://doi.org/10.3102/003465430298487</a></li>' +
+                '<li>Nicol, D. J., &amp; Macfarlane-Dick, D. (2006). Formative assessment and self-regulated learning: A model and seven principles of good feedback practice. <i>Studies in Higher Education, 31</i>(2), 199–218. <a href="https://doi.org/10.1080/03075070600572090">https://doi.org/10.1080/03075070600572090</a></li>' +
+                '</ul>'
         },
         {
             id: "rubrics-with-genai",

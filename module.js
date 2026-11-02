@@ -126,7 +126,7 @@
             })[0];
             if (!text) return;
             if (text.kind === 'live-prompt') {
-                if (window.HEGenAIMakeIt) window.HEGenAIMakeIt.renderPrompt(slot, module.id, drawn);
+                if (window.HEGenAIMakeIt) window.HEGenAIMakeIt.renderPrompt(slot, module.id, drawn, text);
                 return;
             }
             var isDraft = text.kind === 'draft';
