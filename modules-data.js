@@ -757,11 +757,24 @@ window.HEGENAI_MODULES = {
                         '<li><p><strong>Start the practice log.</strong> Note the course, the assignment, when students get the prompt, and how you will find out whether they used it (for example, one question in the hand-in). After the hand-in, answer: Was one piece of feedback a student got right by your criteria? What did you change in the prompt, and why? What would you tell a colleague?</p></li>' +
                         '</ol>' +
                         '<h3>Going further: a course feedback coach at DTU</h3>' +
-                        '<p>At the Technical University of Denmark (DTU), the same idea can go one step further. On DTU’s own GenAI platform, a teacher turns the criteria into a feedback coach that students open with their DTU login, so they only paste their draft. The video shows how it works. You do not need it for this module.</p>' +
+                        '<p>At the Technical University of Denmark (DTU), the same idea can go one step further. On DTU’s own GenAI platform, CampusAI, a teacher turns the criteria into a feedback coach that students open with their DTU login, so they only paste their draft. The video shows how it works (1 min 40 s, no sound; demo with an invented course and student draft). You do not need it for this module.</p>' +
                         '<video class="module-video" controls preload="metadata" src="assets/module-3/dtu-feedback-coach.mp4">' +
-                        '<track kind="captions" src="assets/module-3/dtu-feedback-coach.vtt" srclang="en" label="English">' +
                         '<p>Your browser cannot play this video. <a href="assets/module-3/dtu-feedback-coach.mp4">Download the video</a>.</p>' +
-                        '</video>'
+                        '</video>' +
+                        '<details class="dropdown">' +
+                        '<summary>Text version of the video</summary>' +
+                        '<div class="dropdown-body">' +
+                        '<ol>' +
+                        '<li><strong>Teacher:</strong> opens the Coach Builder and names the course.</li>' +
+                        '<li>Pastes how they assess. Here it is a transcript of them talking about what they look for in reports and what they ask in the oral exam.</li>' +
+                        '<li>Signs in with the university account. The AI turns the text into five report criteria and three oral-exam questions.</li>' +
+                        '<li>Reviews the criteria, adds course readings the coach can point students to, and downloads the coach to share on the course page.</li>' +
+                        '<li><strong>Student:</strong> opens the coach, signs in with their university account, and pastes a draft.</li>' +
+                        '<li>Gets feedback on each criterion: whether it is present, partly there or missing, where in the draft, what is weak, a question to think about, and what to reread. No grade, and no rewritten text.</li>' +
+                        '</ol>' +
+                        '<p>Why your own AI infrastructure helps: students sign in with their university account, so they need no private chatbot accounts; text goes only to the university’s own AI platform; each coach is built from the teacher’s own criteria, which the teacher reviews before students get it.</p>' +
+                        '</div>' +
+                        '</details>'
                 }
             ],
             resources: [
