@@ -2428,3 +2428,26 @@ mark.fill-in {
         transform: none;
     }
 }
+
+/* Certificate section (certificate.js). */
+.certificate-form .tick-item {
+    margin: 16px 0;
+}
+
+.certificate-form .tick-item::before {
+    content: none;
+}
+
+.certificate-form .form-group {
+    max-width: 28rem;
+}
+
+.module-video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0 4px;
+    border-radius: 6px;
+    background-color: #000;
+}

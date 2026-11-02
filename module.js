@@ -352,6 +352,7 @@
         var entries = blocks.map(function (block) {
             return { id: sectionId(block.id), title: block.title };
         });
+        if (module.certificate && window.HEGenAICertificate) entries.push({ id: 'certificate', title: 'Certificate' });
         entries.push({ id: SOURCES_ID, title: 'Sources and credits' });
 
         var mobileContents = create('details', 'card contents-mobile');
@@ -468,6 +469,11 @@
 
             content.appendChild(section);
         });
+
+        // Certificate of completion, for modules with certificate: true (certificate.js)
+        if (module.certificate && window.HEGenAICertificate) {
+            content.appendChild(window.HEGenAICertificate.build(module, blocks));
+        }
 
         // Sources and credits
         var sources = create('section', 'card module-sources');

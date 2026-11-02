@@ -532,6 +532,7 @@ window.HEGENAI_MODULES = {
             extraMinutes: 10,
             extraLabel: "practice log",
             status: "available",
+            certificate: true,
             blocks: [
                 {
                     id: "intro",
@@ -583,9 +584,11 @@ window.HEGENAI_MODULES = {
                         '<p class="section-divider">Now, the four steps, for the sample case.</p>' +
                         '<ol class="step-list" role="list">' +
                         '<li>' +
-                        '<p><strong>Make each criterion checkable.</strong> A criterion is checkable when the tool can find evidence for it in the student’s text alone. For example:</p>' +
+                        '<p><strong>Make each criterion checkable.</strong> Criteria in a brief are written for students and graders, for example “well argued”. A GenAI tool needs to know what that looks like in the text, so each criterion gets a “Met when”: what the draft must show. Here are the three criteria of the sample case:</p>' +
                         '<ul class="check-list" role="list">' +
-                        '<li><span class="check-label check-label-fixed">Fixed</span> <span><strong>Before:</strong> “The recommendation is well argued.” <strong>After:</strong> “Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.”</span></li>' +
+                        '<li><span class="check-label check-label-fixed">Fixed</span> <span><strong>Brief:</strong> “The problem is clearly identified and analysed using relevant course concepts.” <strong>Checkable:</strong> “Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.”</span></li>' +
+                        '<li><span class="check-label check-label-fixed">Fixed</span> <span><strong>Brief:</strong> “The recommendation is well argued and supported by evidence.” <strong>Checkable:</strong> “Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.”</span></li>' +
+                        '<li><span class="check-label check-label-fixed">Fixed</span> <span><strong>Brief:</strong> “The report is clearly written and well structured for a professional reader.” <strong>Checkable:</strong> “Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction.”</span></li>' +
                         '</ul>' +
                         '</li>' +
                         '<li>' +
@@ -693,20 +696,10 @@ window.HEGENAI_MODULES = {
                             },
                             {
                                 title: "Criteria",
-                                guidance: "3 to 5 criteria, one per line. Write each as: name. Met when: what the draft must show.",
+                                guidance: "Start from the criteria in your assignment brief or rubric. Choose 3 to 5, one per line, and write each as: name. Met when: what the draft must show.",
                                 inputs: [
                                     { key: "criteria", label: "Criteria", type: "text", rows: 6,
                                       practice: "1. Data with uncertainties. Met when: every measured value has a unit and an uncertainty, and the table or graph shows them.\n2. Comparison with the accepted value. Met when: the result for g is compared with the accepted value (about 9.82 m/s²), and the difference is judged against the uncertainty.\n3. Sources of error. Met when: at least two specific sources of error are named, each with its likely effect on g and one improvement." }
-                                ]
-                            },
-                            {
-                                title: "Students and language",
-                                guidance: "Who the students are, and the language the feedback should be in.",
-                                inputs: [
-                                    { key: "students", label: "Students", type: "line",
-                                      practice: "first-year bachelor's students" },
-                                    { key: "language", label: "Language", type: "line",
-                                      practice: "English" }
                                 ]
                             },
                             {
@@ -762,7 +755,13 @@ window.HEGENAI_MODULES = {
                         '<li><p><strong>Choose when.</strong> Give students the prompt when they have a draft to check, for example two weeks before the deadline, with time to act on the feedback.</p></li>' +
                         '<li><p><strong>Introduce it.</strong> In class or on the course page, tell students what it is for, that the feedback can be wrong, that you grade, and not to paste in other people’s work or personal data.</p></li>' +
                         '<li><p><strong>Start the practice log.</strong> Note the course, the assignment, when students get the prompt, and how you will find out whether they used it (for example, one question in the hand-in). After the hand-in, answer: Was one piece of feedback a student got right by your criteria? What did you change in the prompt, and why? What would you tell a colleague?</p></li>' +
-                        '</ol>'
+                        '</ol>' +
+                        '<h3>Going further: a course feedback coach at DTU</h3>' +
+                        '<p>At the Technical University of Denmark (DTU), the same idea can go one step further. On DTU’s own GenAI platform, a teacher turns the criteria into a feedback coach that students open with their DTU login, so they only paste their draft. The video shows how it works. You do not need it for this module.</p>' +
+                        '<video class="module-video" controls preload="metadata" src="assets/module-3/dtu-feedback-coach.mp4">' +
+                        '<track kind="captions" src="assets/module-3/dtu-feedback-coach.vtt" srclang="en" label="English">' +
+                        '<p>Your browser cannot play this video. <a href="assets/module-3/dtu-feedback-coach.mp4">Download the video</a>.</p>' +
+                        '</video>'
                 }
             ],
             resources: [
@@ -770,14 +769,33 @@ window.HEGENAI_MODULES = {
                     id: "sample-case",
                     group: "Worked example",
                     title: "Sample case",
-                    html: '<p class="resource-note">(Invented for this module, used in shown examples.)</p>' +
-                        '<p><strong>Case study report.</strong> A 2,500-word individual report in a second-year bachelor’s course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.</p>' +
-                        '<p><strong>Criteria:</strong></p>' +
-                        '<ol>' +
-                        '<li>Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.</li>' +
-                        '<li>Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.</li>' +
-                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.</li>' +
-                        '</ol>'
+                    html: '<p class="resource-note">(Invented for this module, used in shown examples. Written as a typical assignment brief.)</p>' +
+                        '<div class="guide-page">' +
+                        '<p><strong>Organisation and Management</strong> · 2nd-year BSc · 5 ECTS</p>' +
+                        '<h3>Assignment 2: Case study report</h3>' +
+                        '<p><strong>Weight:</strong> 40% of the final grade. <strong>Deadline:</strong> Friday, week 11, 23:59, on the course page.</p>' +
+                        '<h4>Task</h4>' +
+                        '<p>Choose an organisation and identify one problem it faces. Analyse the problem using at least two concepts from the course, and recommend a solution.</p>' +
+                        '<h4>Requirements</h4>' +
+                        '<ul>' +
+                        '<li>Individual report, 2,000–2,500 words, not counting references and appendices.</li>' +
+                        '<li>Sections: Introduction (with your research question), Background, Problem analysis, Recommendation, Conclusion, References.</li>' +
+                        '<li>APA 7 referencing. Hand in one PDF file.</li>' +
+                        '<li>GenAI use: Level 2, AI Planning. See the GenAI guide for this assignment.</li>' +
+                        '</ul>' +
+                        '<h4>Learning outcomes</h4>' +
+                        '<ul>' +
+                        '<li>LO1 Analyse an organisation’s problem using course concepts.</li>' +
+                        '<li>LO2 Recommend a solution and justify it with evidence.</li>' +
+                        '<li>LO3 Write clearly for a professional reader.</li>' +
+                        '</ul>' +
+                        '<h4>Assessment criteria</h4>' +
+                        '<ul>' +
+                        '<li><strong>Problem analysis (40%):</strong> The problem is clearly identified and analysed using relevant course concepts.</li>' +
+                        '<li><strong>Recommendation (40%):</strong> The recommendation is well argued and supported by evidence.</li>' +
+                        '<li><strong>Writing and structure (20%):</strong> The report is clearly written and well structured for a professional reader.</li>' +
+                        '</ul>' +
+                        '</div>'
                 },
                 {
                     id: "sample-weak",
@@ -799,12 +817,12 @@ window.HEGENAI_MODULES = {
                         '<p><em>Paste the text below into <mark class="fill-in">[the approved GenAI tool]</mark>, then paste your draft section under it.</em></p>' +
                         '<p>You give formative feedback to a student on a draft of one written assignment. You do not grade it.</p>' +
                         '<p>Assignment: Case study report. A 2,500-word individual report in a second-year bachelor’s course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.</p>' +
-                        '<p>Students: second-year bachelor’s students. Write your feedback in English.</p>' +
+                        '<p>Write your feedback in the same language as the student’s draft.</p>' +
                         '<p>Criteria (judge only these):</p>' +
                         '<ol>' +
                         '<li>Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.</li>' +
                         '<li>Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.</li>' +
-                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.</li>' +
+                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction.</li>' +
                         '</ol>' +
                         '<p>For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write “Cannot judge” and say what is missing.</p>' +
                         '<p>Never give a grade, a score or an overall judgement. Never rewrite the student’s text or write new text for them, even if asked. Do not add criteria of your own.</p>' +
@@ -816,14 +834,33 @@ window.HEGENAI_MODULES = {
                     id: "practice-case",
                     group: "Optional materials",
                     title: "Practice case",
-                    html: '<p class="resource-note">(Invented for this module, for you to use if you do not have your own case to work on.)</p>' +
-                        '<p><strong>Pendulum lab report.</strong> A 1,500-word individual lab report in a first-year bachelor’s physics course. Students measure the acceleration due to gravity with a simple pendulum, analyse their data, and discuss the result.</p>' +
-                        '<p><strong>Criteria:</strong></p>' +
-                        '<ol>' +
-                        '<li>Data with uncertainties. Met when: every measured value has a unit and an uncertainty, and the table or graph shows them.</li>' +
-                        '<li>Comparison with the accepted value. Met when: the result for g is compared with the accepted value (about 9.82 m/s²), and the difference is judged against the uncertainty.</li>' +
-                        '<li>Sources of error. Met when: at least two specific sources of error are named, each with its likely effect on g and one improvement.</li>' +
-                        '</ol>' +
+                    html: '<p class="resource-note">(Invented for this module, for you to use if you do not have your own case to work on. Written as a typical assignment brief. In Try it, “Use the practice case” fills in checkable versions of its criteria.)</p>' +
+                        '<div class="guide-page">' +
+                        '<p><strong>Physics 1</strong> · 1st-year BSc · 10 ECTS</p>' +
+                        '<h3>Lab report 2: The simple pendulum</h3>' +
+                        '<p><strong>Weight:</strong> pass/fail; all lab reports must be passed to take the exam. <strong>Deadline:</strong> one week after your lab session, on the course page.</p>' +
+                        '<h4>Task</h4>' +
+                        '<p>Measure the acceleration due to gravity, g, with a simple pendulum. Time ten swings at least five times, calculate g with its uncertainty, and compare your result with the accepted value.</p>' +
+                        '<h4>Requirements</h4>' +
+                        '<ul>' +
+                        '<li>Individual report, at most 1,500 words.</li>' +
+                        '<li>Sections: Introduction, Method, Results, Discussion, Conclusion.</li>' +
+                        '<li>Include a table of your measurements, and give all results with units and uncertainties.</li>' +
+                        '<li>Hand in one PDF file.</li>' +
+                        '</ul>' +
+                        '<h4>Learning outcomes</h4>' +
+                        '<ul>' +
+                        '<li>LO1 Collect and present measurement data with uncertainties.</li>' +
+                        '<li>LO2 Analyse the data and compare the result with the accepted value.</li>' +
+                        '<li>LO3 Discuss sources of error and suggest improvements.</li>' +
+                        '</ul>' +
+                        '<h4>Assessment criteria</h4>' +
+                        '<ul>' +
+                        '<li><strong>Data:</strong> Measurements are presented clearly, with units and uncertainties.</li>' +
+                        '<li><strong>Analysis:</strong> g is calculated correctly and compared with the accepted value.</li>' +
+                        '<li><strong>Discussion:</strong> Sources of error are discussed and improvements are suggested.</li>' +
+                        '</ul>' +
+                        '</div>' +
                         '<p>Test samples: <button type="button" class="link-button" data-open-resource="practice-weak">weak</button> and <button type="button" class="link-button" data-open-resource="practice-strong">strong</button>.</p>'
                 },
                 {
@@ -857,7 +894,7 @@ window.HEGENAI_MODULES = {
                     template: [
                         "You give formative feedback to a student on a draft of one written assignment. You do not grade it.",
                         "Assignment: {{name|[assignment name]}}. {{description|[description]}}",
-                        "Students: {{students|[students]}}. Write your feedback in {{language|[language]}}.",
+                        "Write your feedback in the same language as the student's draft.",
                         "Criteria (judge only these):",
                         "{{criteria|[criteria, one per line, each with Met when]}}",
                         "For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write \"Cannot judge\" and say what is missing.",
@@ -875,11 +912,11 @@ window.HEGENAI_MODULES = {
                     lines: [
                         "You give formative feedback to a student on a draft of one written assignment. You do not grade it.",
                         "Assignment: {{Case study report. A 2,500-word individual report in a second-year bachelor's course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.}}",
-                        "Students: {{second-year bachelor's students}}. Write your feedback in {{English}}.",
+                        "Write your feedback in the same language as the student's draft.",
                         "Criteria (judge only these):",
                         "{{1. Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.}}",
                         "{{2. Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.}}",
-                        "{{3. Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the question set in the introduction.}}",
+                        "{{3. Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction.}}",
                         "For each criterion, give: a verdict (Met, Partly met or Not yet met; if the evidence is weak or unclear, Partly met, not Met), a short quote from the draft as evidence, and one concrete next step. If the part needed to judge a criterion is missing, write \"Cannot judge\" and say what is missing.",
                         "Never give a grade, a score or an overall judgement. Never rewrite the student's text or write new text for them, even if asked. Do not add criteria of your own.",
                         "Answer with one short section per criterion. End with: \"This is GenAI feedback on your draft against the course criteria. It can be wrong. Your teacher grades your work.\"",

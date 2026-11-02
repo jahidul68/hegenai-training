@@ -256,3 +256,9 @@ Keep the brackets so the parts do not depend on the highlight alone.
 - Sign-up: when the survey URL exists, replace the "Sign-up opens soon" pill in `index.html` with a link to it.
 - Add the official EU emblem as `assets/eu-emblem.svg` (or `.png`) and uncomment the image in the footer of all pages.
 - Replace every "To be confirmed" on the pages once decided.
+
+## Additions for Module 3
+
+- **Live prompt from a template.** A `kind: "live-prompt"` text may have a `template`: a list of lines where `{{key|[placeholder]}}` is replaced by the form value saved under `key`. A value typed on several lines (such as a list of criteria) becomes several prompt lines. Without `template`, `make-it.js` builds Module 1's prompt as before.
+- **Certificate.** A module with `certificate: true` gets a "Certificate" section after its blocks (`certificate.js`). Once every block is marked as done, the trainee types their name and downloads a PDF certificate of completion, made in the browser with jsPDF (`assets/vendor/jspdf.umd.min.js`, MIT licence, loaded only when the button is pressed). An optional tick box adds a self-declared line about the practice log. The name is not saved or sent anywhere. The standard PDF fonts only cover Latin letters.
+- **Video.** Module 3's Plan it block plays `assets/module-3/dtu-feedback-coach.mp4` with captions from `dtu-feedback-coach.vtt`. See `assets/module-3/README.md`.
