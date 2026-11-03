@@ -543,7 +543,7 @@ window.HEGENAI_MODULES = {
                         '<p>Many students already ask a GenAI chatbot for feedback, with their own prompts. They get fluent but generic feedback, not tied to your criteria and often too kind to weak work.</p>' +
                         '<h3>What you make</h3>' +
                         '<p>A <dfn>feedback agent</dfn>: a GenAI assistant that you set up once and share with your students through a link on your course page. Students open it, paste their draft, and get feedback on each of your criteria, with a quote from their own text and one next step. No grade, and no rewritten text.</p>' +
-                        '<p>This module does not teach you how to build an agent; your tool’s own help does that. It gives you what goes into the agent: the <strong>instructions</strong> (text to paste), the <strong>skill</strong> (a .md file with your assignment, criteria and feedback format, to upload) and, if you have one, a <strong>knowledge</strong> link (your assignment page). You make the first two from your criteria, add them to your tool, and test the agent.</p>',
+                        '<p>This module does not teach you how to build an agent; your tool’s own help does that. It gives you what goes into the agent: the <strong>instructions</strong> (text to paste), the <strong>skill</strong> (a SKILL.md file with your assignment, criteria and feedback format, to upload) and, if you have one, a <strong>knowledge</strong> link (your assignment page). You make the first two from your criteria, add them to your tool, and test the agent.</p>',
                     quiz: {
                         title: "Where you stand",
                         intro: "This question helps you choose your route through the module.",
@@ -578,7 +578,7 @@ window.HEGENAI_MODULES = {
                         '<p><button type="button" class="link-button" data-open-resource="sample-case">Open the sample case</button></p>' +
                         '<p>The agent has three parts:</p>' +
                         '<ol>' +
-                        '<li><strong>Skill: the assignment and criteria, with “met when”.</strong> A .md file. Each criterion says what a draft must show to meet it. Without this, the tool falls back on its own idea of good work. It also gives the feedback format: for each criterion a verdict, a quote from the student’s text as evidence, and one next step.</li>' +
+                        '<li><strong>Skill: the assignment and criteria, with “met when”.</strong> A SKILL.md file. Each criterion says what a draft must show to meet it. Without this, the tool falls back on its own idea of good work. It also gives the feedback format: for each criterion a verdict, a quote from the student’s text as evidence, and one next step.</li>' +
                         '<li><strong>Instructions: fixed rules.</strong> Text. Never a grade, and never rewritten text. They end with a note to the student: the feedback can be wrong, and the teacher grades.</li>' +
                         '<li><strong>Knowledge: a link</strong> to your assignment page or course page, if it is online. Optional: the skill already holds the criteria.</li>' +
                         '</ol>' +
@@ -728,7 +728,7 @@ window.HEGENAI_MODULES = {
                     html: '<p>In this block, you set up your feedback agent, test it on a weak and a strong sample, fix it, and share it with students.</p>' +
                         '<ol class="step-list" role="list">' +
                         '<li>' +
-                        '<p><strong>Download the skill.</strong> It is the skill from <a href="#block-see">See it</a>, with your information from <a href="#block-try">Try it</a>. Download it as a .md file to upload as the agent’s skill.</p>' +
+                        '<p><strong>Download the skill.</strong> It is the skill from <a href="#block-see">See it</a>, with your information from <a href="#block-try">Try it</a>. Download it as SKILL.md and upload it as the agent’s skill (the file must keep the name SKILL.md).</p>' +
                         '<div data-text="make-skill"></div>' +
                         '</li>' +
                         '<li>' +
@@ -739,7 +739,7 @@ window.HEGENAI_MODULES = {
                         '<p><strong>Copy the knowledge link,</strong> if you gave one in <a href="#block-try">Try it</a>. Knowledge takes website links only, so the tool must be able to open the page. No link? Skip this: the skill holds your criteria.</p>' +
                         '<div data-text="make-knowledge"></div>' +
                         '</li>' +
-                        '<li><p><strong>Create the agent</strong> in your approved GenAI tool, with a name students will recognise, for example “Feedback on the case study report”. Paste the instructions into its instructions, upload the .md file as its skill, and add the link, if any, under knowledge. If your tool has no place for a skill, paste the skill text under the instructions.</p></li>' +
+                        '<li><p><strong>Create the agent</strong> in your approved GenAI tool, with a name students will recognise, for example “Feedback on the case study report”. Paste the instructions into its instructions, upload SKILL.md as its skill, and add the link, if any, under knowledge. If your tool has no place for a skill, paste the skill text under the instructions.</p></li>' +
                         '<li><p><strong>Test it on a weak sample.</strong> Open a new conversation with your agent and paste a weak sample. Do it twice, in two new conversations. Use samples you wrote yourself or the practice samples, never real student work with names or other personal data.</p>' +
                         '<p><button type="button" class="link-button" data-open-resource="practice-weak">Open the weak practice sample</button></p></li>' +
                         '<li><p><strong>Test it on a strong sample</strong> in the same way, once.</p>' +
@@ -838,8 +838,8 @@ window.HEGENAI_MODULES = {
                     html: '<p class="resource-note">(Based on the sample case: what the teacher adds to the agent. Students open the agent and paste their draft section.)</p>' +
                         '<div class="guide-page">' +
                         '<h3>Feedback agent: case study report</h3>' +
-                        '<h4>Skill (assignment-feedback.md)</h4>' +
-                        '<p>name: assignment-feedback. description: Gives formative feedback on a student’s draft of the Case study report against its assessment criteria. Use when a student pastes a draft or part of one.</p>' +
+                        '<h4>Skill (SKILL.md)</h4>' +
+                        '<p>name: assignment-feedback. description: Gives formative feedback on a student’s draft of this assignment against its assessment criteria. Use when a student pastes a draft or part of one.</p>' +
                         '<p>Assignment: Case study report. A 2,500-word individual report in a second-year bachelor’s course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.</p>' +
                         '<p>Criteria (judge only these):</p>' +
                         '<ol>' +
@@ -921,12 +921,12 @@ window.HEGENAI_MODULES = {
                     id: "make-skill",
                     kind: "live-prompt",
                     label: "Your agent skill",
-                    copyLabel: "Copy skill text",
-                    download: { label: "Download skill (.md)", filename: "assignment-feedback.md" },
+                    copyLabel: "Copy SKILL.md text",
+                    download: { label: "Download SKILL.md", filename: "SKILL.md" },
                     template: [
                         "---",
                         "name: assignment-feedback",
-                        "description: Gives formative feedback on a student's draft of {{name|[assignment name]}} against its assessment criteria. Use when a student pastes a draft or part of one.",
+                        "description: Gives formative feedback on a student's draft of this assignment against its assessment criteria. Use when a student pastes a draft or part of one.",
                         "---",
                         "# Assignment",
                         "{{name|[assignment name]}}. {{description|[description]}}",
@@ -969,7 +969,7 @@ window.HEGENAI_MODULES = {
                     lines: [
                         "---",
                         "name: assignment-feedback",
-                        "description: Gives formative feedback on a student's draft of {{Case study report}} against its assessment criteria. Use when a student pastes a draft or part of one.",
+                        "description: Gives formative feedback on a student's draft of this assignment against its assessment criteria. Use when a student pastes a draft or part of one.",
                         "---",
                         "# Assignment",
                         "{{Case study report. A 2,500-word individual report in a second-year bachelor's course. Each student picks an organisation, analyses one problem it faces, and recommends a solution.}}",
