@@ -100,10 +100,12 @@
     // prompt: { kind: "live-prompt", template: [ "Assignment: {{name|[assignment name]}}", ... ] }.
     // It may also set label (read by screen readers) and copyLabel (the button's text),
     // for example "Agent instructions" and "Copy instructions"; a module can show several.
+    // optionalKeys: ["link"] lists keys that may stay empty without the "details are missing" notice.
+    // download: { label: "Download SKILL.md", filename: "SKILL.md" } adds a button that saves the text as a file.
     // {{key|[placeholder]}} is replaced by the form value saved under key, or by the
     // placeholder while it is empty. A value typed on several lines (such as a list of
     // criteria) becomes several prompt lines. Returns { lines, missing }.
-    function buildFromTemplate(values, template) {
+    function buildFromTemplate(values, template, optional) {
         var missing = false;
         var lines = [];
         template.forEach(function (source) {
@@ -119,7 +121,7 @@
                 if (raw) {
                     parts.push({ text: raw, filled: true });
                 } else {
-                    missing = true;
+                    if (!optional || optional.indexOf(match[1]) === -1) missing = true;
                     parts.push({ text: match[2] || '[' + match[1] + ']', filled: false });
                 }
                 last = pattern.lastIndex;
@@ -199,6 +201,12 @@
         status.setAttribute('role', 'status');
         var actions = create('div', 'prompt-actions');
         actions.appendChild(copyButton);
+        var downloadButton = null;
+        if (spec && spec.download) {
+            downloadButton = create('button', 'pill-button pill-button-secondary', spec.download.label || 'Download file');
+            downloadButton.type = 'button';
+            actions.appendChild(downloadButton);
+        }
         actions.appendChild(status);
 
         slot.appendChild(notice);
@@ -209,7 +217,7 @@
         function update() {
             var built;
             if (spec && spec.template) {
-                built = buildFromTemplate(forms.get(moduleId), spec.template);
+                built = buildFromTemplate(forms.get(moduleId), spec.template, spec.optionalKeys);
             } else {
                 var found = forms.readLevels(scope, LEVELS_FROM);
                 built = buildLines(forms.get(moduleId), found ? found.levels : []);
@@ -234,6 +242,25 @@
                 status.textContent = NOT_COPIED;
             });
         });
+
+        if (downloadButton) {
+            downloadButton.addEventListener('click', function () {
+                try {
+                    var blob = new Blob([current + '\n'], { type: 'text/markdown;charset=utf-8' });
+                    var url = URL.createObjectURL(blob);
+                    var link = create('a');
+                    link.href = url;
+                    link.download = spec.download.filename || 'file.md';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+                    status.textContent = 'Downloaded ' + link.download + '.';
+                } catch (error) {
+                    status.textContent = NOT_COPIED;
+                }
+            });
+        }
 
         document.addEventListener('hegenai:form-change', function (event) {
             if (event.detail.moduleId === moduleId) update();
