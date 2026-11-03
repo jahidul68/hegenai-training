@@ -98,6 +98,8 @@
 
     // A module may give its live prompt as a template instead of using Module 1's
     // prompt: { kind: "live-prompt", template: [ "Assignment: {{name|[assignment name]}}", ... ] }.
+    // It may also set label (read by screen readers) and copyLabel (the button's text),
+    // for example "Agent instructions" and "Copy instructions"; a module can show several.
     // {{key|[placeholder]}} is replaced by the form value saved under key, or by the
     // placeholder while it is empty. A value typed on several lines (such as a list of
     // criteria) becomes several prompt lines. Returns { lines, missing }.
@@ -187,11 +189,11 @@
 
         var box = create('div', 'text-box prompt-box');
         box.setAttribute('role', 'group');
-        box.setAttribute('aria-label', 'Your prompt');
+        box.setAttribute('aria-label', (spec && spec.label) || 'Your prompt');
         var body = create('div', 'text-box-body');
         box.appendChild(body);
 
-        var copyButton = create('button', 'pill-button pill-button-secondary', 'Copy prompt');
+        var copyButton = create('button', 'pill-button pill-button-secondary', (spec && spec.copyLabel) || 'Copy prompt');
         copyButton.type = 'button';
         var status = create('span', 'copy-status');
         status.setAttribute('role', 'status');
