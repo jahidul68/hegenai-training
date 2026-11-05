@@ -2535,129 +2535,232 @@ mark.fill-in {
     }
 }
 
-/* Module 3: the two parts of a feedback agent. */
-.agent-figure {
+/* Module 3: a simplified agent builder with notes (M3_BUILDER_FIGURE in modules-data.js).
+   Wide screens: notes beside the window with arrows. Narrow screens: each note under its field. */
+.builder-figure {
+    --bf-change: #b4461a;
+    --bf-change-bg: #fbeae2;
+    --bf-same: #17795c;
+    --bf-same-bg: #e1f3ec;
     margin: 20px 0 24px;
 }
 
-.agent-figure figcaption {
+.builder-figure figcaption {
     margin-top: 10px;
     font-size: 0.9rem;
     color: var(--text-muted);
 }
 
-.agent-diagram {
+.bf {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) 28px minmax(0, 1fr) 28px minmax(0, 0.9fr);
-    align-items: center;
-}
-
-.agent-inputs {
-    display: grid;
-    gap: 10px;
-}
-
-.agent-part,
-.agent-box,
-.agent-student {
-    padding: 10px 14px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background-color: white;
-    font-size: 0.92rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr);
+    column-gap: 14px;
+    font-size: 0.9rem;
     line-height: 1.45;
 }
 
-.agent-part p,
-.agent-box p,
-.agent-student p {
+.bf p {
     margin: 0 0 4px;
 }
 
-.agent-part > :last-child,
-.agent-box > :last-child,
-.agent-student > :last-child {
+.bf .bf-r1 { grid-row: 1; }
+.bf .bf-r2 { grid-row: 2; }
+.bf .bf-r3 { grid-row: 3; }
+.bf .bf-r4 { grid-row: 4; }
+.bf .bf-r5 { grid-row: 5; }
+
+.bf-win {
+    grid-column: 2;
+    padding: 8px 14px;
+    border-left: 1px solid #b9bac0;
+    border-right: 1px solid #b9bac0;
+    background-color: white;
+}
+
+.bf-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #b9bac0;
+    border-radius: 12px 12px 0 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.bf-bottom {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #b9bac0;
+    border-radius: 0 0 12px 12px;
+    text-align: right;
+}
+
+.bf-dots {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.bf-dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #d3d4d8;
+}
+
+.bf-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bf-icon {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #e3b3c8;
+}
+
+.bf-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+
+.bf-add,
+.bf-create {
+    display: inline-block;
+    padding: 1px 12px;
+    border: 1px solid #b9bac0;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 400;
+}
+
+.bf-create {
+    background-color: #ececf0;
+}
+
+.bf-field {
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+}
+
+.bf-field-change {
+    border: 1px solid var(--bf-change);
+    background-color: var(--bf-change-bg);
+    color: var(--bf-change);
+}
+
+.bf-field-same {
+    border: 1px solid var(--bf-same);
+    background-color: var(--bf-same-bg);
+    color: var(--bf-same);
+}
+
+.bf-field p:last-child {
     margin-bottom: 0;
 }
 
-.agent-part-name {
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.agent-part-kind {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-}
-
-.agent-part-tag {
-    display: inline-block;
-    padding: 1px 8px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.agent-part-same .agent-part-tag {
-    background-color: #ececf0;
-    color: #444;
-}
-
-.agent-part-yours {
-    border: 2px solid var(--primary);
-}
-
-.agent-part-yours .agent-part-tag {
-    background-color: var(--primary-tint);
-    color: var(--primary-dark);
-}
-
-.agent-box {
-    background-color: var(--primary-tint);
-    border-color: var(--primary);
-    text-align: center;
-}
-
-.agent-student {
-    text-align: center;
-}
-
-.agent-arrow {
-    height: 2px;
-    margin: 0 4px;
-    background-color: var(--primary);
+.bf-note {
     position: relative;
+    align-self: center;
+    font-size: 0.85rem;
 }
 
-.agent-arrow::after {
+.bf-left {
+    grid-column: 1;
+    padding-right: 34px;
+}
+
+.bf-right {
+    grid-column: 3;
+    padding-left: 34px;
+}
+
+.bf-note-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.bf-change .bf-note-title { color: var(--bf-change); }
+.bf-same .bf-note-title { color: var(--bf-same); }
+.bf-grey { color: var(--text-muted); }
+
+.bf-arrow {
+    position: absolute;
+    top: 50%;
+    width: 26px;
+    height: 2px;
+    background-color: #8a8b90;
+}
+
+.bf-change .bf-arrow { background-color: var(--bf-change); }
+.bf-same .bf-arrow { background-color: var(--bf-same); }
+
+.bf-left .bf-arrow { right: 2px; }
+.bf-right .bf-arrow { left: 2px; }
+
+.bf-arrow::after {
     content: "";
     position: absolute;
-    right: -2px;
-    top: -5px;
-    border: 6px solid transparent;
-    border-left: 8px solid var(--primary);
+    top: -4px;
+    border: 5px solid transparent;
+}
+
+.bf-left .bf-arrow::after {
+    right: -6px;
+    border-left: 7px solid;
+    border-left-color: inherit;
     border-right: 0;
 }
 
+.bf-right .bf-arrow::after {
+    left: -6px;
+    border-right: 7px solid;
+    border-right-color: inherit;
+    border-left: 0;
+}
+
+.bf-arrow { border-color: #8a8b90; }
+.bf-change .bf-arrow { border-color: var(--bf-change); }
+.bf-same .bf-arrow { border-color: var(--bf-same); }
+
 @media (max-width: 640px) {
-    .agent-diagram {
+    .bf {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .agent-arrow {
-        width: 2px;
-        height: 22px;
-        margin: 4px auto;
+    .bf .bf-r1, .bf .bf-r2, .bf .bf-r3, .bf .bf-r4, .bf .bf-r5 {
+        grid-row: auto;
     }
 
-    .agent-arrow::after {
-        right: auto;
-        top: auto;
-        bottom: -2px;
-        left: -5px;
-        border: 6px solid transparent;
-        border-top: 8px solid var(--primary);
-        border-bottom: 0;
+    .bf-win,
+    .bf-note {
+        grid-column: 1;
+    }
+
+    .bf-win {
+        border: 1px solid #b9bac0;
+        border-radius: 10px;
+    }
+
+    .bf-top {
+        display: none;
+    }
+
+    .bf-note {
+        margin: 6px 0 12px;
+        padding: 6px 10px;
+        border-left: 3px solid #b9bac0;
+    }
+
+    .bf-change { border-left-color: var(--bf-change); }
+    .bf-same { border-left-color: var(--bf-same); }
+
+    .bf-arrow {
+        display: none;
     }
 }
 

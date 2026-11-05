@@ -93,6 +93,30 @@
 //              lines: [ "...", "..." ] }   one string per line; always set as text, never as HTML
 //   sources HTML for the "Sources and credits" section at the end of the module
 // The five blocks and their titles are the same for every module, so they are defined once.
+// Module 3: a simplified agent builder with notes on where the two parts go.
+// Used in See it and again in Make it.
+var M3_BUILDER_FIGURE =
+    '<figure class="builder-figure">' +
+    '<div class="bf">' +
+    '<div class="bf-win bf-top bf-r1" aria-hidden="true"><span class="bf-dots"><i></i><i></i><i></i></span>Agent builder</div>' +
+    '<div class="bf-win bf-r2"><div class="bf-name"><span class="bf-icon" aria-hidden="true"></span><strong>Feedback on the case study report</strong></div></div>' +
+    '<div class="bf-note bf-left bf-grey bf-r2"><p>Name it so students recognise it.</p><span class="bf-arrow" aria-hidden="true"></span></div>' +
+    '<div class="bf-win bf-r3"><p class="bf-label">Instructions</p>' +
+    '<div class="bf-field bf-field-change">' +
+    '<p>You give formative feedback to a student on a draft. You do not grade it…</p>' +
+    '<p># Assignment<br>Case study report. A 2,500-word…</p>' +
+    '<p># Criteria (judge only these)<br>1. Problem analysis. Met when: …<br>2. Justified recommendation. …</p>' +
+    '</div></div>' +
+    '<div class="bf-note bf-left bf-change bf-r3"><p class="bf-note-title">Instructions: paste</p><p>Your assignment and its criteria, each with a “met when”.</p><p><strong>The only part you change for each assignment.</strong></p><span class="bf-arrow" aria-hidden="true"></span></div>' +
+    '<div class="bf-win bf-r4"><p class="bf-label">Skills <span class="bf-add" aria-hidden="true">+ Add</span></p>' +
+    '<div class="bf-field bf-field-same"><strong>SKILL.md</strong> · criteria-feedback</div></div>' +
+    '<div class="bf-note bf-right bf-same bf-r4"><p class="bf-note-title">Skills: upload once</p><p>Add, then upload the SKILL.md from Make it.</p><p><strong>The same file for every assignment.</strong></p><span class="bf-arrow" aria-hidden="true"></span></div>' +
+    '<div class="bf-win bf-bottom bf-r5"><span class="bf-create" aria-hidden="true">Create</span></div>' +
+    '<div class="bf-note bf-right bf-grey bf-r5"><p>Then share the link with your students.</p><span class="bf-arrow" aria-hidden="true"></span></div>' +
+    '</div>' +
+    '<figcaption>Where the two parts go in an agent builder (simplified; your tool may look a little different). You change the instructions for each assignment; the skill stays the same.</figcaption>' +
+    '</figure>';
+
 window.HEGENAI_MODULES = {
     blocks: [
         { id: "intro", title: "Intro" },
@@ -580,35 +604,7 @@ window.HEGENAI_MODULES = {
                     id: "see",
                     minutes: 12,
                     html: '<p>In this block, you see what goes into a feedback agent for the sample case, and what the agent gives a student with a weak draft.</p>' +
-                        '<figure class="agent-figure">' +
-                        '<div class="agent-diagram">' +
-                        '<div class="agent-inputs">' +
-                        '<div class="agent-part agent-part-same">' +
-                        '<p class="agent-part-name">Skill</p>' +
-                        '<p class="agent-part-kind">A SKILL.md file · upload</p>' +
-                        '<p>How to give the feedback: a verdict, a quote and one next step for each criterion. Never a grade, never rewritten text.</p>' +
-                        '<p class="agent-part-tag">The same for every assignment</p>' +
-                        '</div>' +
-                        '<div class="agent-part agent-part-yours">' +
-                        '<p class="agent-part-name">Instructions</p>' +
-                        '<p class="agent-part-kind">Text · paste</p>' +
-                        '<p>Your assignment and its criteria, each with a “met when”.</p>' +
-                        '<p class="agent-part-tag">You change this</p>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="agent-arrow" aria-hidden="true"></div>' +
-                        '<div class="agent-box">' +
-                        '<p class="agent-part-name">Feedback agent</p>' +
-                        '<p>In your approved GenAI tool, shared with students through a link</p>' +
-                        '</div>' +
-                        '<div class="agent-arrow" aria-hidden="true"></div>' +
-                        '<div class="agent-student">' +
-                        '<p class="agent-part-name">Student</p>' +
-                        '<p>Pastes a draft and gets feedback on each criterion</p>' +
-                        '</div>' +
-                        '</div>' +
-                        '<figcaption>A feedback agent has two parts. You upload the skill once and reuse it; for each assignment, you only change the instructions.</figcaption>' +
-                        '</figure>' +
+                        M3_BUILDER_FIGURE +
                         '<p class="section-divider">Now, the four steps, for the sample case.</p>' +
                         '<ol class="step-list" role="list">' +
                         '<li>' +
@@ -628,6 +624,7 @@ window.HEGENAI_MODULES = {
                         '<div class="criteria-brief"><span class="criteria-label">Brief</span>“The report is <s>clearly written</s> and <s>well structured</s> for a professional reader.”</div>' +
                         '</div>' +
                         '</div>' +
+                        '<p>The struck-through qualities still count: you judge them when you grade. The agent only checks what it can see in the draft.</p>' +
                         '</li>' +
                         '<li>' +
                         '<p><strong>Fill in the agent.</strong> The instructions hold the assignment and the checkable criteria; the underlined parts are what you change for your own assignment. The skill stays as it is.</p>' +
@@ -764,7 +761,8 @@ window.HEGENAI_MODULES = {
                         '<p><strong>Copy the instructions.</strong> They hold your information from <a href="#block-try">Try it</a>. This is the only part you change for another assignment.</p>' +
                         '<div data-text="make-instructions"></div>' +
                         '</li>' +
-                        '<li><p><strong>Create the agent</strong> in your approved GenAI tool, with a name students will recognise, for example “Feedback on the case study report”. Paste the instructions into its instructions and upload SKILL.md as its skill. If your tool has no place for a skill, paste the skill text under the instructions.</p></li>' +
+                        '<li><p><strong>Create the agent</strong> in your approved GenAI tool, with a name students will recognise, for example “Feedback on the case study report”. Paste the instructions into its instructions and upload SKILL.md as its skill. If your tool has no place for a skill, paste the skill text under the instructions.</p>' +
+                        M3_BUILDER_FIGURE + '</li>' +
                         '<li><p><strong>Test it.</strong> Open a new conversation with your agent and paste the weak draft. Do it twice, in two new conversations. Then paste the strong draft once. Use drafts you wrote yourself or the sample case drafts, never real student work with names or other personal data.</p>' +
                         '<p><button type="button" class="link-button" data-open-resource="test-weak">Open the weak draft</button> · <button type="button" class="link-button" data-open-resource="test-strong">Open the strong draft</button></p></li>' +
                         '<li><p><strong>Check the feedback.</strong> First judge the drafts yourself, criterion by criterion. Then tick what holds:</p>' +
