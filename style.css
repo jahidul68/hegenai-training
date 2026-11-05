@@ -2455,3 +2455,236 @@ mark.fill-in {
     border-radius: 6px;
     background-color: #000;
 }
+
+/* Module 3: criteria in two columns, checkable (bright) beside the brief (faded). */
+.criteria-compare {
+    margin: 12px 0 4px;
+}
+
+.criteria-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.criteria-head span {
+    padding: 0 14px 6px;
+}
+
+.criteria-head span:first-child {
+    color: var(--correct-text);
+}
+
+.criteria-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    margin: 0 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.criteria-check,
+.criteria-brief {
+    padding: 12px 14px;
+    line-height: 1.55;
+}
+
+.criteria-check mark {
+    padding: 0 3px;
+    border-radius: 4px;
+    background-color: var(--correct-bg);
+    color: var(--correct-text);
+}
+
+.criteria-brief {
+    border-left: 2px dashed var(--line);
+    color: #8a8b90;
+    font-size: 0.95rem;
+}
+
+.criteria-label {
+    display: none;
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+@media (max-width: 640px) {
+    .criteria-head {
+        display: none;
+    }
+
+    .criteria-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .criteria-brief {
+        border-left: 0;
+        border-top: 2px dashed var(--line);
+    }
+
+    .criteria-label {
+        display: block;
+    }
+
+    .criteria-check .criteria-label {
+        color: var(--correct-text);
+    }
+}
+
+/* Module 3: the two parts of a feedback agent. */
+.agent-figure {
+    margin: 20px 0 24px;
+}
+
+.agent-figure figcaption {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.agent-diagram {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) 28px minmax(0, 1fr) 28px minmax(0, 0.9fr);
+    align-items: center;
+}
+
+.agent-inputs {
+    display: grid;
+    gap: 10px;
+}
+
+.agent-part,
+.agent-box,
+.agent-student {
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background-color: white;
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.agent-part p,
+.agent-box p,
+.agent-student p {
+    margin: 0 0 4px;
+}
+
+.agent-part > :last-child,
+.agent-box > :last-child,
+.agent-student > :last-child {
+    margin-bottom: 0;
+}
+
+.agent-part-name {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.agent-part-kind {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.agent-part-tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.agent-part-same .agent-part-tag {
+    background-color: #ececf0;
+    color: #444;
+}
+
+.agent-part-yours {
+    border: 2px solid var(--primary);
+}
+
+.agent-part-yours .agent-part-tag {
+    background-color: var(--primary-tint);
+    color: var(--primary-dark);
+}
+
+.agent-box {
+    background-color: var(--primary-tint);
+    border-color: var(--primary);
+    text-align: center;
+}
+
+.agent-student {
+    text-align: center;
+}
+
+.agent-arrow {
+    height: 2px;
+    margin: 0 4px;
+    background-color: var(--primary);
+    position: relative;
+}
+
+.agent-arrow::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: -5px;
+    border: 6px solid transparent;
+    border-left: 8px solid var(--primary);
+    border-right: 0;
+}
+
+@media (max-width: 640px) {
+    .agent-diagram {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .agent-arrow {
+        width: 2px;
+        height: 22px;
+        margin: 4px auto;
+    }
+
+    .agent-arrow::after {
+        right: auto;
+        top: auto;
+        bottom: -2px;
+        left: -5px;
+        border: 6px solid transparent;
+        border-top: 8px solid var(--primary);
+        border-bottom: 0;
+    }
+}
+
+/* Module 3: what to change when a check fails. */
+.block-body .fix-list {
+    margin: 12px 0 16px;
+    padding: 0;
+    list-style: none;
+}
+
+.fix-list li {
+    margin: 0 0 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.fix-list p {
+    margin: 0 0 4px;
+}
+
+.fix-list p:last-child {
+    margin-bottom: 0;
+}
+
+.fix-check {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
