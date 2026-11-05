@@ -59,6 +59,8 @@
 //                       whose values stay in the browser (see form.js). Later blocks can read them with
 //                       window.HEGenAIForm.get(moduleId), for example to build a prompt.
 //                         { practiceResource: "practice-case",   resource opened by "Open the practice case"
+//                           practiceLabel: "sample case",   optional; names the case on the buttons (default "practice case")
+//                           practiceStatus: "...",   optional; message shown after the case fills the form
 //                           practiceFill: true,   optional, off unless set: adds a "Use the practice case" button that fills
 //                                                 every input that has a practice value (never a level)
 //                           fields: [ { title: "Assignment",      one numbered step per field
@@ -527,7 +529,7 @@ window.HEGENAI_MODULES = {
             outcome: "After this module, you can turn the assessment criteria of a written assignment into the instructions and skill of a GenAI feedback agent, and you leave with a tested agent your students can use to check their drafts against your criteria before they hand in.",
             outcomePreview: { resource: "finished-agent", caption: "An example of the feedback agent you leave with. Select to open it." },
             audience: "Higher education educators who set written assignments with stated criteria. No prior GenAI experience needed.",
-            needs: "A GenAI tool your institution approves that lets you create an agent and share it with students, for example a Microsoft Copilot agent with instructions, skills and knowledge fields, or your institution’s own GenAI platform. Also, the criteria of an assignment you set, or the practice case provided in the module.",
+            needs: "A GenAI tool your institution approves that lets you create an agent and share it with students, for example a Microsoft Copilot agent with instructions, skills and knowledge fields, or your institution’s own GenAI platform. Also, the criteria of an assignment you set, or the sample case provided in the module.",
             minutes: 55,
             extraMinutes: 10,
             extraLabel: "practice log",
@@ -543,7 +545,10 @@ window.HEGENAI_MODULES = {
                         '<p>Many students already ask a GenAI chatbot for feedback, with their own prompts. They get fluent but generic feedback, not tied to your criteria and often too kind to weak work.</p>' +
                         '<h3>What you make</h3>' +
                         '<p>A <dfn>feedback agent</dfn>: a GenAI assistant that you set up once and share with your students through a link on your course page. Students open it, paste their draft, and get feedback on each of your criteria, with a quote from their own text and one next step. No grade, and no rewritten text.</p>' +
-                        '<p>This module does not teach you how to build an agent; your tool’s own help does that. It gives you what goes into the agent: the <strong>instructions</strong> (text to paste), the <strong>skill</strong> (a SKILL.md file with your assignment, criteria and feedback format, to upload) and, if you have one, a <strong>knowledge</strong> link (your assignment page). You make the first two from your criteria, add them to your tool, and test the agent.</p>',
+                        '<p>This module does not teach you how to build an agent; your tool’s own help does that. It gives you what goes into the agent: the <strong>instructions</strong> (text to paste), the <strong>skill</strong> (a SKILL.md file with your assignment, criteria and feedback format, to upload) and, if you have one, a <strong>knowledge</strong> link (your assignment page). You make the first two from your criteria, add them to your tool, and test the agent.</p>' +
+                        '<h3>One example all the way through</h3>' +
+                        '<p>The module uses one invented example in every block: the <strong>sample case</strong>, a case study report in a second-year business course. You see the agent built for it in <strong>See it</strong>. If you have no assignment of your own, you use the same case in <strong>Try it</strong> and test with its weak and strong drafts in <strong>Make it</strong>.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="sample-case">Open the sample case</button></p>',
                     quiz: {
                         title: "Where you stand",
                         intro: "This question helps you choose your route through the module.",
@@ -563,8 +568,8 @@ window.HEGENAI_MODULES = {
                                     },
                                     {
                                         text: "I have none coming up.",
-                                        note: "Use the practice case throughout the module. It comes with a weak and a strong sample to test on.",
-                                        action: { label: "Open the practice case", resource: "practice-case" }
+                                        note: "Use the sample case throughout the module. It comes with a weak and a strong draft to test on.",
+                                        action: { label: "Open the sample case", resource: "sample-case" }
                                     }
                                 ]
                             }
@@ -639,6 +644,17 @@ window.HEGENAI_MODULES = {
                                 ],
                                 correct: 2,
                                 explanation: "The feedback is formative: the teacher grades, and the student writes the text."
+                            },
+                            {
+                                id: "m3-see3",
+                                prompt: "What is the least you should do before students get the agent?",
+                                options: [
+                                    { text: "Try it once on a text of your own." },
+                                    { text: "Run a weak and a strong draft through it, the weak one twice, and compare the feedback with your own judgement." },
+                                    { text: "Ask a few students whether they like it." }
+                                ],
+                                correct: 1,
+                                explanation: "Only known drafts show whether the agent keeps your standard, and a second run shows whether its verdicts vary. You do this in **Make it**."
                             }
                         ]
                     }
@@ -646,13 +662,14 @@ window.HEGENAI_MODULES = {
                 {
                     id: "try",
                     minutes: 10,
-                    html: '<p>In this block, you collect what the agent needs (the link is optional), for an assignment you set or for the practice case.</p>' +
+                    html: '<p>In this block, you collect what the agent needs (the link is optional), for an assignment you set or for the sample case. With the sample case, select “Use the sample case” and the form is filled in with the checkable criteria you saw in <strong>See it</strong>.</p>' +
                         '<div class="callout">' +
                         '<h3 class="callout-title">What to aim for</h3>' +
                         '<ul>' +
                         '<li>3 to 5 criteria, one per line, each with “Met when:”.</li>' +
                         '<li>Each criterion can be judged from the student’s text alone.</li>' +
                         '<li>The criteria are the ones students see, in words they understand.</li>' +
+                        '<li>Optional: add the mistake students often make, for example “Typical mistake: claims with no source.” It helps the agent spot it.</li>' +
                         '</ul>' +
                         '</div>' +
                         '<div data-form></div>',
@@ -663,15 +680,15 @@ window.HEGENAI_MODULES = {
                             {
                                 id: "m3-try1",
                                 prompt: "Which criterion can a GenAI tool judge from the student’s text alone?",
-                                action: { label: "Open the practice case", resource: "practice-case" },
+                                action: { label: "Open the sample case", resource: "sample-case" },
                                 options: [
                                     {
-                                        text: "Good data. Met when: the student took the measurements carefully.",
-                                        note: "How carefully the student measured cannot be seen in the text."
+                                        text: "Good research. Met when: the student has read widely about the organisation.",
+                                        note: "How widely the student read cannot be seen in the text."
                                     },
                                     {
-                                        text: "Data with uncertainties. Met when: every measured value has a unit and an uncertainty.",
-                                        note: "This can be checked in the text: each value either has a unit and an uncertainty, or not."
+                                        text: "Justified recommendation. Met when: each claim for the recommendation is backed by a cited source or data about the organisation.",
+                                        note: "This can be checked in the text: each claim either has a source or data, or not."
                                     },
                                     {
                                         text: "Effort. Met when: the student has worked hard on the report.",
@@ -683,7 +700,9 @@ window.HEGENAI_MODULES = {
                         ]
                     },
                     form: {
-                        practiceResource: "practice-case",
+                        practiceResource: "sample-case",
+                        practiceLabel: "sample case",
+                        practiceStatus: "Filled in with the sample case. Change anything you like, or go on to Make it.",
                         practiceFill: true,
                         fields: [
                             {
@@ -691,9 +710,9 @@ window.HEGENAI_MODULES = {
                                 guidance: "Its name, and a short description students would recognise.",
                                 inputs: [
                                     { key: "name", label: "Name", type: "line",
-                                      practice: "Pendulum lab report" },
+                                      practice: "Case study report" },
                                     { key: "description", label: "Description", type: "text", rows: 3,
-                                      practice: "A 1,500-word individual lab report in a first-year bachelor's physics course. Students measure the acceleration due to gravity with a simple pendulum, analyse their data, and discuss the result." }
+                                      practice: "A 2,500-word individual report in a second-year bachelor's course. Each student picks an organisation, analyses one problem it faces, and recommends a solution." }
                                 ]
                             },
                             {
@@ -701,7 +720,7 @@ window.HEGENAI_MODULES = {
                                 guidance: "Start from the criteria in your assignment brief or rubric. Choose 3 to 5, one per line, and write each as: name. Met when: what the draft must show.",
                                 inputs: [
                                     { key: "criteria", label: "Criteria", type: "text", rows: 6,
-                                      practice: "1. Data with uncertainties. Met when: every measured value has a unit and an uncertainty, and the table or graph shows them.\n2. Comparison with the accepted value. Met when: the result for g is compared with the accepted value (about 9.82 m/s²), and the difference is judged against the uncertainty.\n3. Sources of error. Met when: at least two specific sources of error are named, each with its likely effect on g and one improvement." }
+                                      practice: "1. Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.\n2. Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.\n3. Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction." }
                                 ]
                             },
                             {
@@ -709,7 +728,7 @@ window.HEGENAI_MODULES = {
                                 guidance: "Which part of the draft, and how long. Shorter parts give more precise feedback.",
                                 inputs: [
                                     { key: "paste", label: "What students paste", type: "line",
-                                      practice: "the Results and Discussion sections of their draft" }
+                                      practice: "one or more sections of their draft" }
                                 ]
                             },
                             {
@@ -740,10 +759,10 @@ window.HEGENAI_MODULES = {
                         '<div data-text="make-knowledge"></div>' +
                         '</li>' +
                         '<li><p><strong>Create the agent</strong> in your approved GenAI tool, with a name students will recognise, for example “Feedback on the case study report”. Paste the instructions into its instructions, upload SKILL.md as its skill, and add the link, if any, under knowledge. If your tool has no place for a skill, paste the skill text under the instructions.</p></li>' +
-                        '<li><p><strong>Test it on a weak sample.</strong> Open a new conversation with your agent and paste a weak sample. Do it twice, in two new conversations. Use samples you wrote yourself or the practice samples, never real student work with names or other personal data.</p>' +
-                        '<p><button type="button" class="link-button" data-open-resource="practice-weak">Open the weak practice sample</button></p></li>' +
+                        '<li><p><strong>Test it on a weak sample.</strong> Open a new conversation with your agent and paste a weak sample. Do it twice, in two new conversations. Use samples you wrote yourself or the sample case drafts, never real student work with names or other personal data.</p>' +
+                        '<p><button type="button" class="link-button" data-open-resource="test-weak">Open the weak draft</button></p></li>' +
                         '<li><p><strong>Test it on a strong sample</strong> in the same way, once.</p>' +
-                        '<p><button type="button" class="link-button" data-open-resource="practice-strong">Open the strong practice sample</button></p></li>' +
+                        '<p><button type="button" class="link-button" data-open-resource="test-strong">Open the strong draft</button></p></li>' +
                         '<li><p><strong>Check the feedback.</strong> First judge the samples yourself, criterion by criterion. Then tick what holds:</p>' +
                         '<ol class="tick-list" data-checklist>' +
                         '<li>Every verdict comes with a quote from the sample.</li>' +
@@ -793,7 +812,7 @@ window.HEGENAI_MODULES = {
                     id: "sample-case",
                     group: "Worked example",
                     title: "Sample case",
-                    html: '<p class="resource-note">(Invented for this module, used in shown examples. Written as a typical assignment brief.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module and used in every block. Written as a typical assignment brief. In Try it, “Use the sample case” fills in checkable versions of its criteria.)</p>' +
                         '<div class="guide-page">' +
                         '<p><strong>Organisation and Management</strong> · 2nd-year BSc · 5 ECTS</p>' +
                         '<h3>Assignment 2: Case study report</h3>' +
@@ -819,7 +838,8 @@ window.HEGENAI_MODULES = {
                         '<li><strong>Recommendation (40%):</strong> The recommendation is well argued and supported by evidence.</li>' +
                         '<li><strong>Writing and structure (20%):</strong> The report is clearly written and well structured for a professional reader.</li>' +
                         '</ul>' +
-                        '</div>'
+                        '</div>' +
+                        '<p>Drafts to test your agent with: <button type="button" class="link-button" data-open-resource="test-weak">weak</button> and <button type="button" class="link-button" data-open-resource="test-strong">strong</button>.</p>'
                 },
                 {
                     id: "sample-weak",
@@ -860,59 +880,35 @@ window.HEGENAI_MODULES = {
                         '</div>'
                 },
                 {
-                    id: "practice-case",
-                    group: "Optional materials",
-                    title: "Practice case",
-                    html: '<p class="resource-note">(Invented for this module, for you to use if you do not have your own case to work on. Written as a typical assignment brief. In Try it, “Use the practice case” fills in checkable versions of its criteria.)</p>' +
+                    id: "test-weak",
+                    group: "Drafts to test with",
+                    title: "Weak draft",
+                    html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, shortened. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
-                        '<p><strong>Physics 1</strong> · 1st-year BSc · 10 ECTS</p>' +
-                        '<h3>Lab report 2: The simple pendulum</h3>' +
-                        '<p><strong>Weight:</strong> pass/fail; all lab reports must be passed to take the exam. <strong>Deadline:</strong> one week after your lab session, on the course page.</p>' +
-                        '<h4>Task</h4>' +
-                        '<p>Measure the acceleration due to gravity, g, with a simple pendulum. Time ten swings at least five times, calculate g with its uncertainty, and compare your result with the accepted value.</p>' +
-                        '<h4>Requirements</h4>' +
-                        '<ul>' +
-                        '<li>Individual report, at most 1,500 words.</li>' +
-                        '<li>Sections: Introduction, Method, Results, Discussion, Conclusion.</li>' +
-                        '<li>Include a table of your measurements, and give all results with units and uncertainties.</li>' +
-                        '<li>Hand in one PDF file.</li>' +
-                        '</ul>' +
-                        '<h4>Learning outcomes</h4>' +
-                        '<ul>' +
-                        '<li>LO1 Collect and present measurement data with uncertainties.</li>' +
-                        '<li>LO2 Analyse the data and compare the result with the accepted value.</li>' +
-                        '<li>LO3 Discuss sources of error and suggest improvements.</li>' +
-                        '</ul>' +
-                        '<h4>Assessment criteria</h4>' +
-                        '<ul>' +
-                        '<li><strong>Data:</strong> Measurements are presented clearly, with units and uncertainties.</li>' +
-                        '<li><strong>Analysis:</strong> g is calculated correctly and compared with the accepted value.</li>' +
-                        '<li><strong>Discussion:</strong> Sources of error are discussed and improvements are suggested.</li>' +
-                        '</ul>' +
-                        '</div>' +
-                        '<p>Test samples: <button type="button" class="link-button" data-open-resource="practice-weak">weak</button> and <button type="button" class="link-button" data-open-resource="practice-strong">strong</button>.</p>'
-                },
-                {
-                    id: "practice-weak",
-                    group: "Optional materials",
-                    title: "Weak practice sample",
-                    html: '<p class="resource-note">(Invented for this module: Results and Discussion of a weak draft for the practice case. Paste it into your agent.)</p>' +
-                        '<div class="guide-page">' +
-                        '<h4>Results and Discussion</h4>' +
-                        '<p>We measured the time for 10 swings five times with a length of 0.80 m. The average period was 1.83 s. Using T = 2π√(L/g) we got g = 9.43. This is close to the real value, so the experiment worked well.</p>' +
-                        '<p>There could be some errors because of human reaction time and the string maybe stretching. In the future the experiment could be done more carefully.</p>' +
+                        '<h4>Introduction</h4>' +
+                        '<p>Café Nord is a small café in Aarhus. This report is about Café Nord and the problems it has.</p>' +
+                        '<h4>Problem analysis</h4>' +
+                        '<p>Café Nord has a problem with customers. Fewer people come back than before, and this is bad for the business. There are many reasons for this, like competition and prices. Motivation is also important for the staff.</p>' +
+                        '<h4>Recommendation</h4>' +
+                        '<p>Based on the analysis, Café Nord should introduce a loyalty app. Loyalty apps are very popular and many companies use them successfully. This would solve the problem of customers not coming back and increase sales. It is also cheap to set up.</p>' +
+                        '<h4>Conclusion</h4>' +
+                        '<p>To sum up, Café Nord has some problems, but with a loyalty app things will get better.</p>' +
                         '</div>'
                 },
                 {
-                    id: "practice-strong",
-                    group: "Optional materials",
-                    title: "Strong practice sample",
-                    html: '<p class="resource-note">(Invented for this module: Results and Discussion of a strong draft for the practice case. Paste it into your agent.)</p>' +
+                    id: "test-strong",
+                    group: "Drafts to test with",
+                    title: "Strong draft",
+                    html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, shortened. The organisation, data and sources are made up. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
-                        '<h4>Results and Discussion</h4>' +
-                        '<p>We timed 10 swings five times at L = 0.800 ± 0.002 m. The mean period was T = 1.796 ± 0.008 s (standard error of the five timings, divided by 10). From T = 2π√(L/g), g = 9.79 ± 0.09 m/s².</p>' +
-                        '<p>The accepted value is about 9.82 m/s², so our result is 0.03 m/s² lower, well within one uncertainty.</p>' +
-                        '<p>The largest source of error is reaction time when starting and stopping the stopwatch, about 0.2 s per timing. Timing 10 swings reduces its effect on T tenfold; timing 20 swings, or using a light gate, would reduce it further. A second source is the amplitude: we released the pendulum at about 15°, where the real period is about 0.4% longer than the small-angle formula assumes, which makes our g slightly too low. Releasing it at under 10° would reduce this.</p>' +
+                        '<h4>Introduction</h4>' +
+                        '<p>This report asks: why do fewer customers return to Café Nord, a 40-seat café in central Aarhus, and what should it do about it? Its sales fell 18% from 2024 to 2025. The report gives background on the café, analyses the problem and recommends a solution.</p>' +
+                        '<h4>Problem analysis</h4>' +
+                        '<p>This section analyses why customers do not return. Since 2024, the share of customers who return within a month has fallen from 46% to 31% (Café Nord sales data, 2025). Two course concepts explain this. First, in Porter’s five forces, the threat of substitutes has grown: two chain cafés opened within 300 m in 2024, both with lower prices. Second, in Herzberg’s two-factor theory, weak hygiene factors such as pay and irregular schedules explain why five of eight staff left in 2024 (owner interview). New staff do not know the regular customers, and in a survey of 40 customers, 29 named “staff who know me” as their main reason for coming.</p>' +
+                        '<h4>Recommendation</h4>' +
+                        '<p>This section recommends how Café Nord can win back regular customers. It should first offer fixed schedules and match local pay, because staff turnover is the cause the analysis found behind the loss of personal service. It should then add a paper stamp card: in a study of 30 small Danish cafés, stamp cards raised return visits by 10–15% (Jensen &amp; Holm, 2022), at about DKK 2,000 a year against DKK 40,000 for an app.</p>' +
+                        '<h4>Conclusion</h4>' +
+                        '<p>Fewer customers return to Café Nord because cheaper competitors arrived and staff turnover removed the personal service its regulars came for. Stable staff, followed by a stamp card, is the recommended response.</p>' +
                         '</div>'
                 }
             ],
