@@ -2342,12 +2342,16 @@ mark.fill-in {
 
     .contents-panel {
         display: block;
+    }
+}
+
+/* The contents panel follows the reader only when the whole panel fits in the
+   window, so it never needs a scroll bar of its own. In shorter windows it
+   simply scrolls with the page. */
+@media (min-width: 900px) and (min-height: 660px) {
+    .contents-panel {
         position: sticky;
         top: calc(var(--header-height) + 24px);
-        /* Taller than the window? It scrolls on its own, so nothing is cut off. */
-        max-height: calc(100vh - var(--header-height) - 48px);
-        overflow-y: auto;
-        overscroll-behavior: contain;
     }
 }
 
