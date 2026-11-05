@@ -844,7 +844,7 @@ window.HEGENAI_MODULES = {
                 {
                     id: "sample-weak",
                     group: "Worked example",
-                    title: "Weak draft: recommendation only",
+                    title: "Weak draft: one section",
                     html: '<p class="resource-note">(Invented for this module: the recommendation section of a weak draft for the sample case.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Recommendation</h4>' +
@@ -854,7 +854,7 @@ window.HEGENAI_MODULES = {
                 {
                     id: "test-weak",
                     group: "Worked example",
-                    title: "Weak draft: full report",
+                    title: "Weak draft",
                     html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, with all the sections the brief asks for, shortened to about 250 words. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
@@ -874,7 +874,7 @@ window.HEGENAI_MODULES = {
                 {
                     id: "test-strong",
                     group: "Worked example",
-                    title: "Strong draft: full report",
+                    title: "Strong draft",
                     html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, with all the sections the brief asks for, shortened to about 450 words. The organisation, data and the Jensen &amp; Holm source are made up. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
@@ -896,7 +896,7 @@ window.HEGENAI_MODULES = {
                 {
                     id: "finished-agent",
                     group: "Worked example",
-                    title: "Finished sample agent",
+                    title: "Finished agent",
                     html: '<p class="resource-note">(Based on the sample case: what the teacher adds to the agent. Students open the agent and paste their draft section.)</p>' +
                         '<div class="guide-page">' +
                         '<h3>Feedback agent: case study report</h3>' +
