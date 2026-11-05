@@ -774,7 +774,11 @@ window.HEGENAI_MODULES = {
                         '<li>Each next step is something the student can do, in the terms of your criteria.</li>' +
                         '</ol>' +
                         '</li>' +
-                        '<li><p><strong>Fix what failed.</strong> Find the tick that is missing, then make the change. Most fixes are in your criteria, so you edit them in <a href="#block-try">Try it</a>, copy the instructions again, paste them over the old ones, and rerun the same drafts. The skill stays as it is.</p>' +
+                        '<li><p><strong>Fix what failed.</strong> All ticked? Go on to the next step. If a tick is missing, open the list below to see what to change.</p>' +
+                        '<details class="dropdown">' +
+                        '<summary>If a tick is missing: what to change</summary>' +
+                        '<div class="dropdown-body">' +
+                        '<p>Most fixes are in your criteria: edit them in <a href="#block-try">Try it</a>, copy the instructions again, paste them over the old ones, and rerun the same drafts. The skill stays as it is.</p>' +
                         '<ul class="fix-list" role="list">' +
                         '<li><p class="fix-check">1. A verdict has no quote, or the format is not followed</p><p><strong>Likely cause:</strong> the agent does not use the skill.</p><p><strong>Change:</strong> check that SKILL.md is uploaded as the agent’s skill. If it still is not used, paste the skill text under the instructions.</p></li>' +
                         '<li><p class="fix-check">2. The weak draft gets “Met”</p><p><strong>Likely cause:</strong> the “met when” is too vague, so fluent text passes.</p><p><strong>Change:</strong> make it something you can see or count (“at least two…”, “each claim…”), and add “Typical mistake: …”.</p></li>' +
@@ -786,6 +790,8 @@ window.HEGENAI_MODULES = {
                         '<h3 class="callout-title">Still failing after two rounds?</h3>' +
                         '<p>Take that criterion out of the instructions and tell students to check it themselves or ask you. Share the agent for the criteria that pass. If none pass, do not share it this term. Either way, note what happened in the practice log: it is a useful finding too.</p>' +
                         '</div>' +
+                        '</div>' +
+                        '</details>' +
                         '</li>' +
                         '<li><p><strong>Share it.</strong> If your institution allows it, share the agent with your students only, and put its link on the course page with one line on top: “Open this agent, then paste your draft.”</p></li>' +
                         '</ol>'
