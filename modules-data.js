@@ -883,32 +883,42 @@ window.HEGENAI_MODULES = {
                     id: "test-weak",
                     group: "Drafts to test with",
                     title: "Weak draft",
-                    html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, shortened. Paste it into your agent in Make it.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, with all the sections the brief asks for, shortened to about 250 words. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
                         '<p>Café Nord is a small café in Aarhus. This report is about Café Nord and the problems it has.</p>' +
+                        '<h4>Background</h4>' +
+                        '<p>Café Nord opened in 2015. It sells coffee, cakes and sandwiches and has some staff. It is a popular café, but things have changed in the last years.</p>' +
                         '<h4>Problem analysis</h4>' +
                         '<p>Café Nord has a problem with customers. Fewer people come back than before, and this is bad for the business. There are many reasons for this, like competition and prices. Motivation is also important for the staff.</p>' +
                         '<h4>Recommendation</h4>' +
                         '<p>Based on the analysis, Café Nord should introduce a loyalty app. Loyalty apps are very popular and many companies use them successfully. This would solve the problem of customers not coming back and increase sales. It is also cheap to set up.</p>' +
                         '<h4>Conclusion</h4>' +
                         '<p>To sum up, Café Nord has some problems, but with a loyalty app things will get better.</p>' +
+                        '<h4>References</h4>' +
+                        '<p>Wikipedia. (n.d.). Loyalty program. Retrieved from wikipedia.org</p>' +
                         '</div>'
                 },
                 {
                     id: "test-strong",
                     group: "Drafts to test with",
                     title: "Strong draft",
-                    html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, shortened. The organisation, data and sources are made up. Paste it into your agent in Make it.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, with all the sections the brief asks for, shortened to about 450 words. The organisation, data and the Jensen &amp; Holm source are made up. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
                         '<p>This report asks: why do fewer customers return to Café Nord, a 40-seat café in central Aarhus, and what should it do about it? Its sales fell 18% from 2024 to 2025. The report gives background on the café, analyses the problem and recommends a solution.</p>' +
+                        '<h4>Background</h4>' +
+                        '<p>This section describes Café Nord as it is today. It opened in 2015, is run by its owner, and has eight staff on part-time contracts with weekly changing schedules. Most of its sales come from regular customers who live or work nearby.</p>' +
                         '<h4>Problem analysis</h4>' +
                         '<p>This section analyses why customers do not return. Since 2024, the share of customers who return within a month has fallen from 46% to 31% (Café Nord sales data, 2025). Two course concepts explain this. First, in Porter’s five forces, the threat of substitutes has grown: two chain cafés opened within 300 m in 2024, both with lower prices. Second, in Herzberg’s two-factor theory, weak hygiene factors such as pay and irregular schedules explain why five of eight staff left in 2024 (owner interview). New staff do not know the regular customers, and in a survey of 40 customers, 29 named “staff who know me” as their main reason for coming.</p>' +
                         '<h4>Recommendation</h4>' +
                         '<p>This section recommends how Café Nord can win back regular customers. It should first offer fixed schedules and match local pay, because staff turnover is the cause the analysis found behind the loss of personal service. It should then add a paper stamp card: in a study of 30 small Danish cafés, stamp cards raised return visits by 10–15% (Jensen &amp; Holm, 2022), at about DKK 2,000 a year against DKK 40,000 for an app.</p>' +
                         '<h4>Conclusion</h4>' +
                         '<p>Fewer customers return to Café Nord because cheaper competitors arrived and staff turnover removed the personal service its regulars came for. Stable staff, followed by a stamp card, is the recommended response.</p>' +
+                        '<h4>References</h4>' +
+                        '<p>Herzberg, F. (1966). <i>Work and the nature of man</i>. World Publishing.</p>' +
+                        '<p>Jensen, M., &amp; Holm, L. (2022). Stamp cards and repeat visits in small Danish cafés. <i>Nordic Journal of Retail Studies, 9</i>(2), 45–58.</p>' +
+                        '<p>Porter, M. E. (2008). The five competitive forces that shape strategy. <i>Harvard Business Review, 86</i>(1), 78–93.</p>' +
                         '</div>'
                 }
             ],
