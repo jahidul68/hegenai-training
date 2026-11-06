@@ -133,7 +133,8 @@
             var render = isDraft ? renderDraftLines : renderPromptLines;
             slot.className = isDraft ? 'text-box draft-box' : 'text-box prompt-box';
             slot.setAttribute('role', 'group');
-            if (isDraft) {
+            // showLabel: true also shows a prompt box's label above it (drafts always show theirs).
+            if (isDraft || (text.label && text.showLabel)) {
                 var label = create('p', 'draft-label', text.label);
                 label.id = 'text-' + id + '-label';
                 slot.setAttribute('aria-labelledby', label.id);

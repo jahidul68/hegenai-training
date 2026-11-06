@@ -558,7 +558,7 @@ window.HEGENAI_MODULES = {
             extraMinutes: 10,
             extraLabel: "practice log",
             status: "available",
-            certificate: true,
+            certificate: false,
             blocks: [
                 {
                     id: "intro",
@@ -608,20 +608,20 @@ window.HEGENAI_MODULES = {
                         '<p class="section-divider">Now, the four steps, for the sample case.</p>' +
                         '<ol class="step-list" role="list">' +
                         '<li>' +
-                        '<p><strong>Make each criterion checkable.</strong> Criteria in a brief are written for students and graders, for example “well argued”. A GenAI tool needs to know what that looks like in the text, so each criterion gets a “met when”: what the draft must show. The highlighted parts can be checked in the draft; the struck-through words cannot.</p>' +
+                        '<p><strong>Make each criterion checkable.</strong> Criteria as written in an assignment description are for students and graders, for example “well argued”. A GenAI tool needs to know what that looks like in the text, so each criterion gets a “met when”: what the draft must show. The highlighted parts can be checked in the draft; the struck-through words cannot.</p>' +
                         '<div class="criteria-compare">' +
-                        '<div class="criteria-head" aria-hidden="true"><span>Checkable: what the agent gets</span><span>Brief: what students and graders see</span></div>' +
+                        '<div class="criteria-head" aria-hidden="true"><span>Checkable: what the agent gets</span><span>Original: what students and graders see</span></div>' +
                         '<div class="criteria-row">' +
                         '<div class="criteria-check"><span class="criteria-label">Checkable</span><strong>Problem analysis.</strong> Met when: <mark>the problem is stated in one or two sentences</mark>, and <mark>at least two course concepts</mark> are applied to it using <mark>facts about the organisation</mark>.</div>' +
-                        '<div class="criteria-brief"><span class="criteria-label">Brief</span>“The problem is <s>clearly</s> identified and analysed using <s>relevant</s> course concepts.”</div>' +
+                        '<div class="criteria-brief"><span class="criteria-label">Original</span>“The problem is <s>clearly</s> identified and analysed using <s>relevant</s> course concepts.”</div>' +
                         '</div>' +
                         '<div class="criteria-row">' +
                         '<div class="criteria-check"><span class="criteria-label">Checkable</span><strong>Justified recommendation.</strong> Met when: the recommendation <mark>follows from the analysis</mark>, and <mark>each claim for it is backed by a cited source or data</mark> about the organisation.</div>' +
-                        '<div class="criteria-brief"><span class="criteria-label">Brief</span>“The recommendation is <s>well argued</s> and supported by evidence.”</div>' +
+                        '<div class="criteria-brief"><span class="criteria-label">Original</span>“The recommendation is <s>well argued</s> and supported by evidence.”</div>' +
                         '</div>' +
                         '<div class="criteria-row">' +
                         '<div class="criteria-check"><span class="criteria-label">Checkable</span><strong>Clear for a professional reader.</strong> Met when: <mark>each section opens by stating its purpose</mark>, and <mark>the conclusion answers the research question</mark> set in the introduction.</div>' +
-                        '<div class="criteria-brief"><span class="criteria-label">Brief</span>“The report is <s>clearly written</s> and <s>well structured</s> for a professional reader.”</div>' +
+                        '<div class="criteria-brief"><span class="criteria-label">Original</span>“The report is <s>clearly written</s> and <s>well structured</s> for a professional reader.”</div>' +
                         '</div>' +
                         '</div>' +
                         '<p>The struck-through qualities still count: you judge them when you grade. The agent only checks what it can see in the draft.</p>' +
@@ -669,7 +669,7 @@ window.HEGENAI_MODULES = {
                 {
                     id: "try",
                     minutes: 10,
-                    html: '<p>In this block, you write what goes into the instructions, for an assignment you set or for the sample case. With the sample case, select “Use the sample case” and the form is filled in with the checkable criteria you saw in <strong>See it</strong>.</p>' +
+                    html: '<p>In this block, you write what goes into the instructions, for an assignment you set or for the sample case. With the sample case, select “Use the sample case”: the form is filled in with its criteria as written for students, and you make each one checkable yourself. Then compare with the version in <strong>See it</strong>.</p>' +
                         '<div class="callout">' +
                         '<h3 class="callout-title">What to aim for</h3>' +
                         '<ul>' +
@@ -686,7 +686,18 @@ window.HEGENAI_MODULES = {
                         '<div data-text="try-starter"></div>' +
                         '</div>' +
                         '</details>' +
-                        '<div data-form></div>',
+                        '<div data-form></div>' +
+                        '<details class="dropdown">' +
+                        '<summary>Sample case: compare with our checkable version</summary>' +
+                        '<div class="dropdown-body">' +
+                        '<p>Yours does not need to match. Check that each of yours says what the draft must show, in things a reader can see or count.</p>' +
+                        '<ol>' +
+                        '<li>Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.</li>' +
+                        '<li>Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.</li>' +
+                        '<li>Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction.</li>' +
+                        '</ol>' +
+                        '</div>' +
+                        '</details>',
                     quiz: {
                         title: "Self-check",
                         scored: true,
@@ -716,7 +727,7 @@ window.HEGENAI_MODULES = {
                     form: {
                         practiceResource: "sample-case",
                         practiceLabel: "sample case",
-                        practiceStatus: "Filled in with the sample case. Change anything you like, or go on to Make it.",
+                        practiceStatus: "Filled in with the sample case. Its criteria are as written for students: rewrite each one with a “Met when:”, then compare with our version below the form.",
                         practiceFill: true,
                         fields: [
                             {
@@ -731,10 +742,10 @@ window.HEGENAI_MODULES = {
                             },
                             {
                                 title: "Criteria",
-                                guidance: "Start from the criteria in your assignment brief or rubric. Choose 3 to 5, one per line, and write each as: name. Met when: what the draft must show.",
+                                guidance: "Start from the criteria in your assignment description or rubric. Choose 3 to 5, one per line, and write each as: name. Met when: what the draft must show.",
                                 inputs: [
                                     { key: "criteria", label: "Criteria", type: "text", rows: 6,
-                                      practice: "1. Problem analysis. Met when: the problem is stated in one or two sentences, and at least two course concepts are applied to it using facts about the organisation.\n2. Justified recommendation. Met when: the recommendation follows from the analysis, and each claim for it is backed by a cited source or data about the organisation.\n3. Clear for a professional reader. Met when: each section opens by stating its purpose, and the conclusion answers the research question set in the introduction." }
+                                      practice: "1. Problem analysis. The problem is clearly identified and analysed using relevant course concepts.\n2. Recommendation. The recommendation is well argued and supported by evidence.\n3. Writing and structure. The report is clearly written and well structured for a professional reader." }
                                 ]
                             },
                             {
@@ -831,7 +842,7 @@ window.HEGENAI_MODULES = {
                     id: "sample-case",
                     group: "Worked example",
                     title: "Sample case",
-                    html: '<p class="resource-note">(Invented for this module and used in every block. Written as a typical assignment brief. In Try it, “Use the sample case” fills in checkable versions of its criteria.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module and used in every block. Written as a typical assignment description. In Try it, “Use the sample case” fills in its criteria as written here, for you to make checkable.)</p>' +
                         '<div class="guide-page">' +
                         '<p><strong>Organisation and Management</strong> · 2nd-year BSc · 5 ECTS</p>' +
                         '<h3>Assignment 2: Case study report</h3>' +
@@ -864,7 +875,7 @@ window.HEGENAI_MODULES = {
                     id: "test-weak",
                     group: "Worked example",
                     title: "Weak draft",
-                    html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, with all the sections the brief asks for, shortened to about 250 words. Paste it into your agent in Make it.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module: a weak draft for the sample case, with all the sections the assignment asks for, shortened to about 250 words. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
                         '<p>Café Nord is a small café in Aarhus. This report is about Café Nord and the problems it has.</p>' +
@@ -884,7 +895,7 @@ window.HEGENAI_MODULES = {
                     id: "test-strong",
                     group: "Worked example",
                     title: "Strong draft",
-                    html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, with all the sections the brief asks for, shortened to about 450 words. The organisation, data and the Jensen &amp; Holm source are made up. Paste it into your agent in Make it.)</p>' +
+                    html: '<p class="resource-note">(Invented for this module: a strong draft for the sample case, with all the sections the assignment asks for, shortened to about 450 words. The organisation, data and the Jensen &amp; Holm source are made up. Paste it into your agent in Make it.)</p>' +
                         '<div class="guide-page">' +
                         '<h4>Introduction</h4>' +
                         '<p>This report asks: why do fewer customers return to Café Nord, a 40-seat café in central Aarhus, and what should it do about it? Its sales fell 18% from 2024 to 2025. The report gives background on the café, analyses the problem and recommends a solution.</p>' +
@@ -930,7 +941,10 @@ window.HEGENAI_MODULES = {
                 {
                     id: "make-skill",
                     kind: "live-prompt",
-                    label: "The feedback skill",
+                    label: "Skill",
+                    showLabel: true,
+                    showLines: 4,
+                    moreLabel: "Show the whole skill",
                     copyLabel: "Copy SKILL.md text",
                     download: { label: "Download SKILL.md", filename: "SKILL.md" },
                     template: [
@@ -956,7 +970,8 @@ window.HEGENAI_MODULES = {
                 {
                     id: "make-instructions",
                     kind: "live-prompt",
-                    label: "Your agent instructions",
+                    label: "Instructions",
+                    showLabel: true,
                     copyLabel: "Copy instructions",
                     template: [
                         "You give formative feedback to a student on a draft of one written assignment. You do not grade it, and you never rewrite the student's text. Use your skill criteria-feedback for how to give the feedback.",
@@ -984,7 +999,8 @@ window.HEGENAI_MODULES = {
                 {
                     id: "see-instructions",
                     kind: "prompt",
-                    label: "Agent instructions",
+                    label: "Instructions",
+                    showLabel: true,
                     lines: [
                         "You give formative feedback to a student on a draft of one written assignment. You do not grade it, and you never rewrite the student's text. Use your skill criteria-feedback for how to give the feedback.",
                         "# Assignment",
@@ -1000,7 +1016,8 @@ window.HEGENAI_MODULES = {
                 {
                     id: "see-skill",
                     kind: "prompt",
-                    label: "Agent skill, the same for every assignment",
+                    label: "Skill",
+                    showLabel: true,
                     showLines: 4,
                     moreLabel: "Show the whole skill",
                     lines: [

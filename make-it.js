@@ -192,8 +192,31 @@
         var box = create('div', 'text-box prompt-box');
         box.setAttribute('role', 'group');
         box.setAttribute('aria-label', (spec && spec.label) || 'Your prompt');
+        // showLabel: true shows the label above the box, as on draft boxes.
+        if (spec && spec.label && spec.showLabel) {
+            var label = create('p', 'draft-label', spec.label);
+            label.id = 'live-' + moduleId + '-' + (spec.id || 'prompt') + '-label';
+            box.removeAttribute('aria-label');
+            box.setAttribute('aria-labelledby', label.id);
+            box.appendChild(label);
+        }
         var body = create('div', 'text-box-body');
         box.appendChild(body);
+        // showLines: lines after this stay hidden until the toggle under the box is pressed.
+        var showLines = spec && typeof spec.showLines === 'number' ? spec.showLines : null;
+        var moreLabel = (spec && spec.moreLabel) || 'Show all';
+        var expanded = false;
+        var toggle = null;
+        if (showLines !== null) {
+            toggle = create('button', 'text-box-toggle', moreLabel);
+            toggle.type = 'button';
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.addEventListener('click', function () {
+                expanded = !expanded;
+                update();
+            });
+            box.appendChild(toggle);
+        }
 
         var copyButton = create('button', 'pill-button pill-button-secondary', (spec && spec.copyLabel) || 'Copy prompt');
         copyButton.type = 'button';
@@ -225,7 +248,9 @@
             current = plainText(built.lines);
             notice.hidden = !built.missing;
             body.textContent = '';
-            built.lines.forEach(function (line) {
+            var folds = showLines !== null && built.lines.length > showLines;
+            var shown = folds && !expanded ? built.lines.slice(0, showLines) : built.lines;
+            shown.forEach(function (line) {
                 var paragraph = create('p', 'prompt-line');
                 line.forEach(function (part) {
                     if (part.filled) paragraph.appendChild(create('mark', 'prompt-value', part.text));
@@ -233,6 +258,12 @@
                 });
                 body.appendChild(paragraph);
             });
+            if (toggle) {
+                toggle.hidden = !folds;
+                body.classList.toggle('is-collapsed', folds && !expanded);
+                toggle.setAttribute('aria-expanded', String(expanded));
+                toggle.textContent = expanded ? 'Show less' : moreLabel;
+            }
         }
 
         copyButton.addEventListener('click', function () {
